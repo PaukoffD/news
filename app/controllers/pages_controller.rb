@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   def load
    page1 = Nokogiri::HTML(open("http://www.vesti.ru/news/"))
  
-   page1.css(".b-item__inner").each do |link|
+   page1.xpath("//*[contains(@class,'b-item__inner')]").each do |link|
     @p=Page.new
     #@notice.notice=link.at_css(".ob_title").text
 	#s=link.at_css(".photo_preview")
@@ -25,8 +25,8 @@ class PagesController < ApplicationController
 	@p.save
    end 
    page2 = Nokogiri::HTML(open("http://www.interfax.ru/news/"))
-   page2.css(".an a").each do |link|
-   loa
+   page2.xpath("//div[@class='an']/div").each do |link|
+   #
     @p=Page.new
     #@notice.notice=link.at_css(".ob_title").text
 	#s=link.at_css(".photo_preview")
@@ -37,9 +37,9 @@ class PagesController < ApplicationController
 	#@notice.name=link.at_css(".author").text
 	
 	#@notice.text=link.at_css("p[3]").text
-	@p.title=link.text
-	@p.ref="www.interfax.ru"+link['href']
-	#@p.time=link.at_css(".b-item__time").text
+	@p.title=link.at_css('a').text
+	@p.ref="www.interfax.ru"+link.at_css('a')['href']
+	@p.time=link.at_css('span').text
 	
 	@p.save
   end 

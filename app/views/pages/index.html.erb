@@ -6,10 +6,10 @@
 
  <thead>
   <tr>
-    <th width="10%">Время</th>
-    <th width="40%">Новость</th>
-    <th width="10%">Время</th>
-    <th width="40%"><center>Новость</center></th>
+    <th width="5%">Время</th>
+    <th width="45%">Новость</th>
+    <th width="5%">Время</th>
+    <th width="45%"><center>Новость</center></th>
    
    </tr>
   </thead>
@@ -23,7 +23,7 @@
     <tr>
      
 	    
-	 <td><%= a.time.strftime("at %I:%M%p")  %></td>
+	 <td><h6><%= a.time.strftime("%I:%M%p")  %></h6></td>
 	
 	  
 	 <td> 
@@ -37,7 +37,7 @@
 	 
 	
 	  
-	<td><%= b.time.strftime("at %I:%M%p") %></td>
+	<td> <h6><%= b.time.strftime("%I:%M%p") %></h6></td>
 	
 	  
 	  
