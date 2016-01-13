@@ -19,7 +19,7 @@ class PagesController < ApplicationController
 	
 	#@notice.text=link.at_css("p[3]").text
 	@p.title=link.at_css(".b-item__title").text
-	@p.ref="www.vesti.ru"+link.at_css(".b-item__title a")['href']
+	@p.ref="http://www.vesti.ru"+link.at_css(".b-item__title a")['href']
 	@p.time=link.at_css(".b-item__time").text
 	
 	@p.save
@@ -38,7 +38,7 @@ class PagesController < ApplicationController
 	
 	#@notice.text=link.at_css("p[3]").text
 	@p.title=link.at_css('a').text
-	@p.ref="www.interfax.ru"+link.at_css('a')['href']
+	@p.ref="http://www.interfax.ru"+link.at_css('a')['href']
 	@p.time=link.at_css('span').text
 	
 	@p.save
