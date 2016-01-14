@@ -20,7 +20,7 @@ class PagesController < ApplicationController
 	#@notice.text=link.at_css("p[3]").text
 	@p.title=link.at_css(".b-item__title").text
 	@p.ref="http://www.vesti.ru"+link.at_css(".b-item__title a")['href']
-	@p.time=link.at_css(".b-item__time").text
+	@p.time=link.at_css(".b-item__time").text.to_datetime
 	
 	@p.save
    end 
@@ -39,7 +39,28 @@ class PagesController < ApplicationController
 	#@notice.text=link.at_css("p[3]").text
 	@p.title=link.at_css('a').text
 	@p.ref="http://www.interfax.ru"+link.at_css('a')['href']
-	@p.time=link.at_css('span').text
+	@p.time=link.at_css('span').text.to_datetime
+	
+	@p.save
+  end 
+  
+  page3 = Nokogiri::HTML(open("http://www.vedomosti.ru/newsline/top"))
+   page3.xpath("//article[@class='b-news-item']").each do |link|
+   #
+    @p=Page.new
+	
+    #@notice.notice=link.at_css(".ob_title").text
+	#s=link.at_css(".photo_preview")
+	#if !s.name="td"
+	# @notice.ref_img=link.at_css(".photo_preview img")['src']
+	#end 
+	#@notice.ref_page=link.at_css(".ob_descr td a")['href']
+	#@notice.name=link.at_css(".author").text
+	
+	#@notice.text=link.at_css("p[3]").text
+	@p.title=link.at_css('a').text
+	@p.ref="http://www.vedomosti.ru"+link.at_css('a')['href']
+	@p.time=link.at_css('.b-news-item__time')['pubdate'].to_datetime
 	
 	@p.save
   end 
@@ -47,7 +68,7 @@ class PagesController < ApplicationController
   
   def index
   
-    @pages = Page.all.order('created_at ASC')
+    @pages = Page.all.order('time DESC')
   end
 
   # GET /pages/1

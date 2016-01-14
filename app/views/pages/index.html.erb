@@ -26,13 +26,13 @@
 	
 	
 	 
-	 <td><h6><%= a.time.strftime("%I:%M%p")  %></h6>
+	 <td><h6><%= a.time.strftime("%R")  %></h6>
 	  
 	 </td>
 	
 	  
 	 <td> 
-	 <div class='icon'><h6><%= image_tag('/img/vesti.ico', :size => 15) %>
+	 <div class='icon'><h6><%= image_tag('/img/vesti.ico', :size => "20") %>
 	  <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" %> </h6></div>
 	  
 	  </td>
@@ -43,11 +43,13 @@
 	 
 	
 	  
-	<td> <h6><%= b.time.strftime("%I:%M%p") %></h6></td>
+	<td> <h6><%= b.time.strftime("%R") %></h6></td>
 	
 	  
 	  
-	  <td><h6><%= link_to b.title,  b.ref,:target => "_blank" %></h6>
+	  <td>
+	  <div class='icon'><h6><%= image_tag('/img/interfax.ico', :size => "20") %>
+	  <%= link_to b.title,  b.ref,:target => "_blank" %></h6></div>
          
 	  </td>
 	  
