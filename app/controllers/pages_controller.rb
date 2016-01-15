@@ -19,7 +19,11 @@ class PagesController < ApplicationController
 	
 	#@notice.text=link.at_css("p[3]").text
 	@p.title=link.at_css(".b-item__title").text
-	@p.ref="http://www.vesti.ru"+link.at_css(".b-item__title a")['href']
+	if (link.at_css(".b-item__title a")['href'].match('http'))
+	 @p.ref=link.at_css(".b-item__title a")['href']
+	 else
+	 @p.ref="http://www.vesti.ru"+link.at_css(".b-item__title a")['href']
+	end 
 	@p.time=link.at_css(".b-item__time").text.to_datetime
 	
 	@p.save
