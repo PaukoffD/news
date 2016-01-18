@@ -6,19 +6,16 @@ class PagesController < ApplicationController
   # GET /pages.json
   def load
    page1 = Nokogiri::HTML(open("http://www.vesti.ru/news/"))
- 
+  i=0
    page1.xpath("//*[contains(@class,'b-item__inner')]").each do |link|
     @p=Page.new
-    #@notice.notice=link.at_css(".ob_title").text
-	#s=link.at_css(".photo_preview")
-	#if !s.name="td"
-	# @notice.ref_img=link.at_css(".photo_preview img")['src']
-	#end 
-	#@notice.ref_page=link.at_css(".ob_descr td a")['href']
-	#@notice.name=link.at_css(".author").text
 	
-	#@notice.text=link.at_css("p[3]").text
-	@p.title=link.at_css(".b-item__title").text
+	plast=Newslast.last
+	
+    @p.title=link.at_css(".b-item__title").text
+	if plast.title==p.title
+	  break
+	end  
 	if (link.at_css(".b-item__title a")['href'].match('http'))
 	 @p.ref=link.at_css(".b-item__title a")['href']
 	 else
@@ -27,6 +24,13 @@ class PagesController < ApplicationController
 	@p.time=link.at_css(".b-item__time").text.to_datetime
 	
 	@p.save
+	if i<1
+	 @p1=Newslast.new
+	  @p1.title=link.at_css(".b-item__title").text
+	  @p1.time=link.at_css(".b-item__time").text.to_datetime
+	  @p1.save
+	 end 
+	 i=i+1
    end 
    page2 = Nokogiri::HTML(open("http://www.interfax.ru/news/"))
    page2.xpath("//div[@class='an']/div").each do |link|
