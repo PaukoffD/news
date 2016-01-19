@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   
    root 'pages#index'
    get 'loadnews', to: 'pages#load'
+   get 'analyze', to: 'pages#analyze'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -33,16 +33,40 @@
     <ul class="nav navbar-nav navbar-left">
                  <li><%= link_to " Категории", root_path %><span class="sr-only">(current)</span></a></li>
                  <li><%= link_to "Правила", root_path %><span class="sr-only">(current)</span></a></li>
-	             <li class="right"><%= link_to 'Загрузить новости', loadnews_path %><span class="sr-only"></li>
-				 <li class="right"><%= link_to 'Анализ', root_path %><span class="sr-only"></li>
+	             <li class="right"><%= link_to 'Загрузить новости', loadnews_path %><span class="sr-only">(current)</span></a></li>
+				 <li class="right"><%= link_to 'Анализ', root_path %><span class="sr-only">(current)</span></a></li>
+				 <li class="right"><%= link_to 'Инструменты', analyze_path %><span class="sr-only">(current)</span></a></li>
                </ul>
     
    
      
                
+            
+   
+  <div class="collapse navbar-collapse" id="navbar-collapse-1">
+
+                    <ul class="nav navbar-nav navbar-right">
+                         
+                        
+							
+					     	 <li class="dropdown">
+                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Админ
+                              <span class="caret"></span></a>
+                                 <ul class="dropdown-menu">
+                                   <li><%= link_to 'Posts', loadnews_path %></li>
+                                  <li><%= link_to 'Администратор', root_path %></li>
+                                   <li><%= link_to 'Категории', root_path %></li>
+								   <li><%= link_to 'Tools', root_path %></li>
+								   <li><%= link_to 'Модерация', root_path %></li>
+                                </ul>
+						
+							 
+                         
+                        
+                    </ul>
+               </div>
             </div>
         </nav>
-
 
 		
 		

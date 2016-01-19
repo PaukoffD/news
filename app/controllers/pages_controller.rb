@@ -7,15 +7,18 @@ class PagesController < ApplicationController
   def load
    page1 = Nokogiri::HTML(open("http://www.vesti.ru/news/"))
   i=0
+  j=0
    page1.xpath("//*[contains(@class,'b-item__inner')]").each do |link|
-    @p=Page.new
+    if j<1
+	@p=Page.new
 	
 	plast=Newslast.last
 	
     @p.title=link.at_css(".b-item__title").text
-	if plast.title==p.title
-	  break
+	if plast.title==@p.title
+	  j=1
 	end  
+	
 	if (link.at_css(".b-item__title a")['href'].match('http'))
 	 @p.ref=link.at_css(".b-item__title a")['href']
 	 else
@@ -31,6 +34,7 @@ class PagesController < ApplicationController
 	  @p1.save
 	 end 
 	 i=i+1
+	end 
    end 
    page2 = Nokogiri::HTML(open("http://www.interfax.ru/news/"))
    page2.xpath("//div[@class='an']/div").each do |link|
