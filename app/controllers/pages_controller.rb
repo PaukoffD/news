@@ -78,6 +78,15 @@ class PagesController < ApplicationController
   end 
  end 
   
+  
+  def analyze
+  
+  end
+  
+  
+  
+  
+  
   def index
   
     @pages = Page.all.order('time DESC')
