@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
   require 'open-uri'
-  
+  #require 'text'
   # GET /pages
   # GET /pages.json
   def load
@@ -38,22 +38,17 @@ class PagesController < ApplicationController
    end 
    page2 = Nokogiri::HTML(open("http://www.interfax.ru/news/"))
    page2.xpath("//div[@class='an']/div").each do |link|
-   #
-    @p=Page.new
-    #@notice.notice=link.at_css(".ob_title").text
-	#s=link.at_css(".photo_preview")
-	#if !s.name="td"
-	# @notice.ref_img=link.at_css(".photo_preview img")['src']
-	#end 
-	#@notice.ref_page=link.at_css(".ob_descr td a")['href']
-	#@notice.name=link.at_css(".author").text
-	
-	#@notice.text=link.at_css("p[3]").text
-	@p.title=link.at_css('a').text
-	@p.ref="http://www.interfax.ru"+link.at_css('a')['href']
-	@p.time=link.at_css('span').text.to_datetime
+  
+   
+    
+	if link.at_css('a')!=nil
+	 @p=Page.new
+	 @p.title=link.at_css('a').text
+	 @p.ref="http://www.interfax.ru"+link.at_css('a')['href']
+	 @p.time=link.at_css('span').text.to_datetime
 	
 	@p.save
+	end
   end 
   
   page3 = Nokogiri::HTML(open("http://www.vedomosti.ru/newsline/top"))
@@ -80,7 +75,15 @@ class PagesController < ApplicationController
   
   
   def analyze
-  
+   @pages=Page.all  
+   for j in 0..@pages.length-2
+     s1=@pages[j]
+	 for i in 1..@pages.length-1
+	  s2=@pages[i]
+	  puts Gem::Text.levenshtein_distance(s1, s2)
+	 # puts ld
+	 end
+	end 
   end
   
   
