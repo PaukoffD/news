@@ -80,9 +80,9 @@ class PagesController < ApplicationController
   def analyze
    @pages=Page.all  
    for j in 0..@pages.length-2
-     s1=@pages[j].to_s
+     s1=@pages[j]
 	 for i in 1..@pages.length-1
-	  s2=@pages[i].to_s
+	  s2=@pages[i]
 	  puts Text::Levenshtein.distance(s1, s2)
 	 # puts ld
 	 end
