@@ -56,22 +56,23 @@ class PagesController < ApplicationController
   
   page3 = Nokogiri::HTML(open("http://www.vedomosti.ru/newsline/top"))
    page3.xpath("//article[@class='b-news-item']").each do |link|
-   #
+   
     @p=Page.new
-	
-    #@notice.notice=link.at_css(".ob_title").text
-	#s=link.at_css(".photo_preview")
-	#if !s.name="td"
-	# @notice.ref_img=link.at_css(".photo_preview img")['src']
-	#end 
-	#@notice.ref_page=link.at_css(".ob_descr td a")['href']
-	#@notice.name=link.at_css(".author").text
-	
-	#@notice.text=link.at_css("p[3]").text
 	@p.title=link.at_css('a').text
 	@p.ref="http://www.vedomosti.ru"+link.at_css('a')['href']
 	@p.time=link.at_css('.b-news-item__time')['pubdate'].to_datetime
 	
+	@p.save
+  end 
+  
+  page4 = Nokogiri::HTML(open("http://www.rosbalt.ru/allnews/"))
+   page4.xpath(".//*[@id='updates']").each do |link|
+   
+    @p=Page.new
+	@p.title=link.at_css('a').text
+	@p.ref="http://www.rosbalt.ru/"+link.at_css('a')['href']
+	@p.time=link.at_css('.b-news-item__time')['pubdate'].to_datetime
+	loa
 	@p.save
   end 
  end 
@@ -80,11 +81,23 @@ class PagesController < ApplicationController
   def analyze
    @pages=Page.all  
    for j in 0..@pages.length-2
-     s1=@pages[j].to_s
+   lp=Levpage.new
+   s1=@pages[j].title
+   lp.page_id=@pages[j].id
+   lp.name=@pages[j].title
+   lp.save
 	 for i in 1..@pages.length-1
-	  s2=@pages[i].to_s
-	  puts Text::Levenshtein.distance(s1, s2)
-	 # puts ld
+	  s2=@pages[i].title
+	  ld= Text::Levenshtein.distance(s1, s2)
+	  puts ld, s1, s2 
+      if ld<10
+       lp1=Levpage.last 	  
+	   lp2=Levpage.new
+	   lp2.parent_id=lp1.id
+	   lp2.name=@pages[i].title
+	   lp2.page_id=@pages[i].id
+	   lp2.save
+	  end 
 	 end
 	end 
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118105126) do
+ActiveRecord::Schema.define(version: 20160225093816) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -29,6 +29,24 @@ ActiveRecord::Schema.define(version: 20160118105126) do
     t.datetime "updated_at", null: false
     t.string   "word11"
     t.string   "word12"
+  end
+
+  create_table "levenstein_pages", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.integer  "count",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "levpages", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.integer  "count",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "newslasts", force: :cascade do |t|
