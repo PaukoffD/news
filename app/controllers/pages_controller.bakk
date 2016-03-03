@@ -6,37 +6,64 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-  source=Source.all
-  source.each do |s|
-   url=s.ref
-  
-   feed = Feedjira::Feed.fetch_and_parse url
-  
-
-  feed.entries.each do |entry|
-   @p=Page.new
-   @p.title=entry.title
-   @p.ref=entry.url
-   @p.time=entry.published
+   page1 = Nokogiri::HTML(open("http://www.vesti.ru/news/"))
+  i=0
+  j=0
+   page1.xpath("//*[contains(@class,'b-item__inner')]").each do |link|
+    if j<1
+	@p=Page.new
 	
-  @p.save
-  end
- end
-
+	plast=Newslast.last
+	
+    @p.title=link.at_css(".b-item__title").text
+	if !plast.blank?
+        if plast.title==@p.title
+	  j=1
+	end  
+	
+	if (link.at_css(".b-item__title a")['href'].match('http'))
+	 @p.ref=link.at_css(".b-item__title a")['href']
+	 else
+	 @p.ref="http://www.vesti.ru"+link.at_css(".b-item__title a")['href']
+	end 
+	@p.time=link.at_css(".b-item__time").text.to_datetime
+	
+	@p.save
+       end
+	if i<1
+	 @p1=Newslast.new
+	  @p1.title=link.at_css(".b-item__title").text
+	  @p1.time=link.at_css(".b-item__time").text.to_datetime
+	  @p1.save
+	 end 
+	 i=i+1
+	end 
+   end 
+   page2 = Nokogiri::HTML(open("http://www.interfax.ru/news/"))
+   page2.xpath("//div[@class='an']/div").each do |link|
   
- 
-  
- # page3 = Nokogiri::HTML(open("http://www.vedomosti.ru/newsline/top"))
- #  page3.xpath("//article[@class='b-news-item']").each do |link|
    
-  #  @p=Page.new
-#	@p.title=link.at_css('a').text
-#	@p.ref="http://www.vedomosti.ru"+link.at_css('a')['href']
-#	@p.time=link.at_css('.b-news-item__time')['pubdate'].to_datetime
+    
+	if link.at_css('a')!=nil
+	 @p=Page.new
+	 @p.title=link.at_css('a').text
+	 @p.ref="http://www.interfax.ru"+link.at_css('a')['href']
+	 @p.time=link.at_css('span').text.to_datetime
 	
-#	@p.save
-
+	@p.save
+	end
+  end 
   
+  page3 = Nokogiri::HTML(open("http://www.vedomosti.ru/newsline/top"))
+   page3.xpath("//article[@class='b-news-item']").each do |link|
+   
+    @p=Page.new
+	@p.title=link.at_css('a').text
+	@p.ref="http://www.vedomosti.ru"+link.at_css('a')['href']
+	@p.time=link.at_css('.b-news-item__time')['pubdate'].to_datetime
+	
+	@p.save
+  end 
   
  
  end 
