@@ -7,22 +7,49 @@ class PagesController < ApplicationController
   # GET /pages.json
   def load
   source=Source.all
+
   source.each do |s|
    url=s.ref
   
    feed = Feedjira::Feed.fetch_and_parse url
   
-
+  i=0
+  j=0
   feed.entries.each do |entry|
+  if j<1
+    @p=Page.new
+    plast=Newslast.last
    @p=Page.new
    @p.title=entry.title
-   @p.ref=entry.url
-   @p.time=entry.published
-	
-  @p.save
+    if !plast.blank?
+        if plast.title==@p.title
+	  j=1
+	end  
+     @p.ref=entry.url
+     @p.time=entry.published
+     @p.source_id=s.id
+     @p.category_id=1
+     @p.summary=entry.summary
+     @p.save
+    else
+     if i==feed.entries.length-1
+	 @p1=Newslast.new
+	  @p1.title=entry.title
+	  @p1.time=entry.published
+          @p1.source_id=s.id
+	 # @p1.save
+     else
+         @p1=Newslast.new
+	  @p1.title=entry.title
+	  @p1.time=entry.published
+          @p1.source_id=s.id
+	  @p1.save
+     end 
+	 i=i+1
+    end 
   end
  end
-
+end
   
  
   
@@ -74,6 +101,7 @@ class PagesController < ApplicationController
   def index
   
     @pages = Page.all.order('time DESC')
+
   end
 
   # GET /pages/1
@@ -138,6 +166,6 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:title, :ref, :time)
+      params.require(:page).permit!
     end
 end
