@@ -10,15 +10,15 @@ class PagesController < ApplicationController
 
   source.each do |s|
    url=s.ref
-  
+   i=0
+   j=0
    feed = Feedjira::Feed.fetch_and_parse url
   
-  i=0
-  j=0
+ 
   feed.entries.each do |entry|
   if j<1
     @p=Page.new
-    plast=Newslast.last
+    plast=Newslast.find_by(source_id: s.id)
    @p=Page.new
    @p.title=entry.title
     if !plast.blank?
@@ -28,7 +28,16 @@ class PagesController < ApplicationController
      @p.ref=entry.url
      @p.time=entry.published
      @p.source_id=s.id
-     @p.category_id=1
+	 s2=entry.categories[0]
+	 
+	 cat1=Category.find_by(name: s2)
+	  if cat1.blank?
+	    c=Category.new
+		c.name=entry.categories[0]
+		c.save
+		cat1=Category.last
+	  end	
+     @p.category_id=cat1.id
      @p.summary=entry.summary
      @p.save
     else
@@ -81,7 +90,7 @@ end
 	  s2=@pages[i].title
 	  ld= Text::Levenshtein.distance(s1, s2)
 	  puts ld, s1, s2 
-      if ld<10 and @pages[i].id!=@pages[j].id
+      if ld<15 and @pages[i].id!=@pages[j].id
        #lp1=Levpage.last 	  
 	   lp2=Levpage.new
 	   lp2.parent_id=lp.page_id
@@ -101,7 +110,7 @@ end
   def index
   
     @pages = Page.all.order('time DESC')
-
+    @categories=Category.all
   end
 
   # GET /pages/1

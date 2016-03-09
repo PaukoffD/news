@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308182923) do
+ActiveRecord::Schema.define(version: 20160309124617) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -31,10 +31,30 @@ ActiveRecord::Schema.define(version: 20160308182923) do
     t.string   "word12"
   end
 
+  create_table "archives", force: :cascade do |t|
+    t.string   "title"
+    t.string   "ref"
+    t.time     "time"
+    t.integer  "source_id",   default: 0
+    t.string   "summary"
+    t.integer  "category_id", default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "categories", force: :cascade do |t|
-    t.string   "category"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "levenstein_pages", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.integer  "count",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "levpages", force: :cascade do |t|
