@@ -68,14 +68,18 @@ class PagesController < ApplicationController
     end 
     
   end
-      Page.all.order('time DESC')
+      Page.all.order('created_at DESC')
      @page1=Page.find_by(source_id: s)
      @p1=Newslast.new
      @p1.title=@page1.title
      @p1.time=@page1.created_at
      @p1.source_id=s.id
      @p1.ref=@page1.ref
+      
      @p1.save
+#fixme добавить проверку чтоб была одна строка из соурса 
+     @page2=Newslast.first
+     @page2.delete 
  end
 
   
