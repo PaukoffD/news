@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309124617) do
+ActiveRecord::Schema.define(version: 20160310140316) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 20160309124617) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "levenstein_pages", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.integer  "count",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "levpages", force: :cascade do |t|
     t.integer  "page_id"
     t.integer  "parent_id"
@@ -76,6 +85,7 @@ ActiveRecord::Schema.define(version: 20160309124617) do
     t.integer  "source_id",   default: 0
     t.string   "summary"
     t.integer  "category_id", default: 0
+    t.string   "tagtitle"
   end
 
   create_table "sources", force: :cascade do |t|
@@ -88,5 +98,41 @@ ActiveRecord::Schema.define(version: 20160309124617) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
   end
+
+  create_table "tagexcepts", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tagoverlaps", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.string   "name"
+    t.integer  "tagtarget_id"
+    t.string   "nametarget"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
 end

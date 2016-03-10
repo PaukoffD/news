@@ -68,18 +68,21 @@ class PagesController < ApplicationController
     end 
     
   end
-      Page.all.order('created_at DESC')
-     @page1=Page.find_by(source_id: s)
-     @p1=Newslast.new
-     @p1.title=@page1.title
-     @p1.time=@page1.created_at
+#fixme не работает эта байда    
+	Page.all.reorder('created_at DESC')
+     @page1=Page.all.where(source_id: s)
+	 @p1=Newslast.new
+	
+	 @p1.title=@page1.last.title
+     @p1.time=@page1.last.created_at
      @p1.source_id=s.id
-     @p1.ref=@page1.ref
-      
+     @p1.ref=@page1.last.ref
      @p1.save
-#fixme добавить проверку чтоб была одна строка из соурса 
-     @page2=Newslast.first
-     @page2.delete 
+	 tmp=Newslast.all.where(source_id: s.id)
+	 if tmp.count >1
+	   p3=Newslast.first
+	   p3.delete
+	 end  
  end
 
   
@@ -126,13 +129,28 @@ class PagesController < ApplicationController
 	end 
   end
   
-  
+  def atags
+   ActsAsTaggableOn.delimiter = ([' ', ','])
+   @pages = Page.all
+    @pages.each do |pt|
+    pt.tag_list.add(pt.title, parse: true)
+    puts pt.tag_list
+	pt.save
+
+    end   
+  end 
   
   
   
   def index
   
-    @pages = Page.all.order('time DESC')
+  if params[:category]
+     @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])
+	else
+     @pages = Page.all.order('time DESC').page(params[:page])
+ end
+	
+    
     @categories=Category.all
   end
 
@@ -199,5 +217,6 @@ class PagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
       params.require(:page).permit!
+	  params.require(:newslast).permit!
     end
 end

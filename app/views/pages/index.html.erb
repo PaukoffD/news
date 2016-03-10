@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+
+
+
+
 <table class="table">
   <thead>
     <tr>
@@ -18,7 +22,7 @@
 <h4>Категориии</h4>
 <% @categories.each do |cat| %>
 	 
-	<h6><%= cat.name %></h6>
+	<h6><%= link_to cat.name, cat %></h6>
 <% end %>
 </td>	 
  <td>
@@ -96,7 +100,7 @@
   </tbody>
 </table>	 
 
-
+<%= paginate(@pages) %>
 
 
 
