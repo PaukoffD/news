@@ -134,7 +134,7 @@ class PagesController < ApplicationController
    @pages = Page.all
     @pages.each do |pt|
     pt.tag_list.add(pt.title, parse: true)
-    puts pt.tag_list
+   
 	pt.save
 
     end   

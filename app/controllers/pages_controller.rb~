@@ -150,6 +150,10 @@ class PagesController < ApplicationController
      @pages = Page.all.order('time DESC').page(params[:page])
  end
 	
+
+  def tag_cloud
+
+  end
     
     @categories=Category.all
   end
@@ -164,7 +168,7 @@ class PagesController < ApplicationController
     @page = Page.new
   end
 
-  # GET /pages/1/edit
+  
   def edit
   end
 
