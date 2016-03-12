@@ -10,5 +10,4 @@ Rails.application.routes.draw do
    get 'category/:category', to: 'pages#index', as: :category
    get 'data', to: 'pages#index', as: :data
    get 'atags', to: 'pages#atags'
-   get 'tag_cloud', to: 'pages#tag_cloud'
  end

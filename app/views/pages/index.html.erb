@@ -1,9 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 
-
-
-
 <table class="table">
   <thead>
     <tr>
@@ -43,7 +40,7 @@
   
 
 
-   <center><%= Time.now() %></center>
+   <center><%= Time.zone.now() %></center>
    <hr>
     <% @pages.includes(:source).each_slice(2) do |a, b| %>
  	
