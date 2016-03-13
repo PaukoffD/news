@@ -105,17 +105,18 @@ class PagesController < ApplicationController
   
   
   def analyze
-   @pages=Page.all  
+   @pages=Page.all
+   i=0  
    for j in 0..@pages.length-2
    lp=Levpage.new
    s1=@pages[j].title
    lp.page_id=@pages[j].id
    lp.name=@pages[j].title
-   
-	 for i in 1..@pages.length-1
+   i=j+1
+	 for i in i..@pages.length-1
 	  s2=@pages[i].title
 	  ld= Text::Levenshtein.distance(s1, s2)
-	  puts ld, s1, s2 
+	  puts ld, s1, s2, i, j
       if ld<15 and @pages[i].id!=@pages[j].id
        #lp1=Levpage.last 	  
 	   lp2=Levpage.new
@@ -145,18 +146,19 @@ class PagesController < ApplicationController
   
   def index
   
-  if params[:category]
+   if params[:category]
      @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])
-	else
+	 else
      @pages = Page.all.order('time DESC').page(params[:page])
- end
-	
+   end
+	@levpages=Levpage.all
 
   def tag_cloud
 
   end
     
     @categories=Category.all
+
   end
 
   # GET /pages/1
