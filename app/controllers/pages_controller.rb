@@ -151,7 +151,7 @@ class PagesController < ApplicationController
 	 else
      @pages = Page.all.order('time DESC').page(params[:page])
    end
-	@levpages=Levpage.all
+	@levpage=Levpage.roots
 
   def tag_cloud
 

@@ -1,6 +1,6 @@
 class Page < ActiveRecord::Base
 belongs_to :source
-has_many :levpages, :dependent => :destroy
+belongs_to :levpage
 validates :ref, uniqueness: true
 acts_as_taggable
 

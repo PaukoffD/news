@@ -16,6 +16,16 @@
   
      <tr>
 	  <td>
+	  
+<div class="input-group date">
+  <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+</div>
+
+
+  
+	  
+	  
+	  
 <h4>Категориии</h4>
 <% @categories.each do |cat| %>
 	 
@@ -57,7 +67,7 @@
 	  
 	 <td> 
       <details>
-       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %> <span class="badge"><%= a.levpage.count %></span></a></h6></div></summary>
+       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
         <%= a.summary %>
        </details> 
 
