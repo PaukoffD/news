@@ -151,16 +151,30 @@ class PagesController < ApplicationController
 	 else
      @pages = Page.all.order('time DESC').page(params[:page])
    end
-	@levpage=Levpage.roots
+    if params[:tag]
+    @pages = Page.tagged_with(params[:tag]).order('created_at DESC').page(params[:page])
+    else
+    @pages = Page.all.order('time DESC').page(params[:page])
+    end
+    if params[:data]
+	puts params['data'].to_date
+    @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
+    else
+    @pages = Page.all.order('time DESC').page(params[:page])
+    end
 
-  def tag_cloud
-
-  end
+  
     
     @categories=Category.all
 
   end
-
+  
+def tag_cloud
+ 
+   #@tags = Tags.all.order('count DESC')
+  end
+  
+  
   # GET /pages/1
   # GET /pages/1.json
   def show

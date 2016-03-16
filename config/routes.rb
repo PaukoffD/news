@@ -11,4 +11,6 @@ Rails.application.routes.draw do
    get 'data', to: 'pages#index', as: :data
    get 'atags', to: 'pages#atags'
    get 'tag_cloud', to: 'pages#tag_cloud'
+   get 'tags/:tag', to: 'pages#index', as: :tag
+  # get 'data/:data', to: 'pages#index', as: :data
  end
