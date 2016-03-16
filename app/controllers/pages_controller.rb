@@ -148,15 +148,14 @@ class PagesController < ApplicationController
   
    if params[:category]
      @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])
-	else if params[:tag]
+	elsif params[:tag]
      @pages = Page.tagged_with(params[:tag]).order('created_at DESC').page(params[:page])
-    else if params[:data]
+    elsif params[:data]
 	 @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
     else
     @pages = Page.all.order('time DESC').page(params[:page])
     end
-	end
-	end
+	
   
   
     
