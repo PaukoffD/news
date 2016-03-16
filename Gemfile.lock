@@ -55,8 +55,6 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-datepicker-rails (1.6.0.1)
-      railties (>= 3.0)
     builder (3.2.2)
     bullet (5.0.0)
       activesupport (>= 3.0.0)
@@ -274,7 +272,6 @@ DEPENDENCIES
   babosa
   better_errors
   binding_of_caller
-  bootstrap-datepicker-rails
   bullet
   byebug
   ckeditor
