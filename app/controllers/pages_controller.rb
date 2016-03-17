@@ -138,7 +138,7 @@ class PagesController < ApplicationController
       pt.tag_list.add(pt.title, parse: true)
       pt.save
      end
-     puts pt.tag_list
+     #puts pt.tag_list
     end   
   end 
   
@@ -151,7 +151,7 @@ class PagesController < ApplicationController
 	elsif params[:tag]
      @pages = Page.tagged_with(params[:tag]).order('created_at DESC').page(params[:page])
     elsif params[:data]
-	 @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
+	 @pages = Page.where(time: (params['data'].to_time.current.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
     else
     @pages = Page.all.order('time DESC').page(params[:page])
     end
