@@ -132,12 +132,12 @@ class PagesController < ApplicationController
   
   def atags
    ActsAsTaggableOn.delimiter = ([' ', ','])
-   @pages = Page.all
+   @pages = Page.tag_list.blank?
     @pages.each do |pt|
-     if pt.tag_list.blank?
+     #if pt.tag_list.blank?
       pt.tag_list.add(pt.title, parse: true)
       pt.save
-     end
+    # end
      #puts pt.tag_list
     end   
   end 
