@@ -139,7 +139,7 @@ class PagesController < ApplicationController
       pt.tag_list.add(pt.title, parse: true)
       pt.save
      end
-     puts pt.tag_list
+   #  puts pt.tag_list
     end   
   end 
   

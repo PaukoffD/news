@@ -19,6 +19,9 @@
 
 # Learn more: http://github.com/javan/whenever
 
- every 15.minutes do
+ every 20.minutes do
    rake "fetch"
+end
+every '* 25 * * *' do
+  rake "tags"
 end
