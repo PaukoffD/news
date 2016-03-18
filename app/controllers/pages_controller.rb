@@ -3,6 +3,7 @@ class PagesController < ApplicationController
   require 'open-uri'
   require 'rubygems'
   require 'text'
+  require 'time'
   # GET /pages
   # GET /pages.json
   def load
@@ -132,17 +133,22 @@ class PagesController < ApplicationController
   
   def atags
    ActsAsTaggableOn.delimiter = ([' ', ','])
-   @pages = Page.tag_list.blank?
+   @pages = Page.all
     @pages.each do |pt|
-     #if pt.tag_list.blank?
+     if pt.tag_list.blank?
       pt.tag_list.add(pt.title, parse: true)
       pt.save
-    # end
-     #puts pt.tag_list
+     end
+     puts pt.tag_list
     end   
   end 
   
-  
+  def info
+   @pages=Page.all.count
+   @tags = ActsAsTaggableOn::Tag.all.count
+   @taggings = ActsAsTaggableOn::Tagging.all.count
+   @source=Source.all.count
+  end 
   
   def index
   
@@ -150,16 +156,14 @@ class PagesController < ApplicationController
      @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])
 	elsif params[:tag]
      @pages = Page.tagged_with(params[:tag]).order('created_at DESC').page(params[:page])
-    elsif params[:data]
-	 @pages = Page.where(time: (params['data'].to_time.current.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
+  else
+   if params[:data]
+	   @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
     else
     @pages = Page.all.order('time DESC').page(params[:page])
     end
-	
-  
-  
-    
-    @categories=Category.all
+	end
+   @categories=Category.all
 
   end
   

@@ -5,4 +5,6 @@ validates :ref, uniqueness: true
 acts_as_taggable_on :tags
 
 self.per_page = 250
+
+
 end
