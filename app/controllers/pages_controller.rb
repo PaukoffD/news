@@ -46,7 +46,7 @@ class PagesController < ApplicationController
        @p.save
     else
       @p.ref=entry.url
-        @p.time=entry.published
+        @p.time=entry.published.to_datetime
         @p.source_id=s.id
  s2=entry.categories[0]
   
