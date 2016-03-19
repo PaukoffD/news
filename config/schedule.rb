@@ -22,6 +22,6 @@
  every 20.minutes do
    rake "fetch"
 end
-every '* 25 * * *' do
+every  '25 * * * *' do
   rake "tags"
 end

@@ -19,11 +19,14 @@
 	  <td>
 	  
 
-
-
+<h4>Тэги</h4>
+<% ActsAsTaggableOn::Tag.most_used.each do |most| %>
+	 
+	<h6><%= link_to most.name, tag_path(most.name) %></h6>
+<% end %>
   
 	  
-	  
+<%= 	  %>
 	  
 <h4>Категориии</h4>
 <% @categories.each do |cat| %>
