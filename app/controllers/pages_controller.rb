@@ -27,7 +27,7 @@ class PagesController < ApplicationController
    j=1
  end  
         @p.ref=entry.url
-        @p.time=entry.published
+        @p.time=entry.published.to_time
         @p.source_id=s.id
  s2=entry.categories[0]
   
@@ -61,7 +61,12 @@ class PagesController < ApplicationController
   cat1=Category.last
    end 
        @p.category_id=cat1.id
-       @p.summary=entry.summary
+       if entry.summary.blank?
+        
+         entry.summary=" "
+       else  
+        @p.summary=entry.summary
+       end 
        @p.save
     end
     

@@ -74,9 +74,12 @@
 	
 	  
 	 <td> 
+	 <% if a.summary.blank? %>
+	 <% a.summary= " " %>
+	 <% end %>
       <details>
        <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
-        <%= a.summary %>
+        <%= markdown(a.summary) %>
        </details> 
 
 	  
@@ -93,11 +96,13 @@
 	  
 	  
 	  <td>
-	 
+	  <% if b.summary.blank? %>
+	 <% b.summary= " " %>
+	 <% end %>
 	 
        <details>
        <summary><%= image_tag(b.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%=  link_to b.title, nil, 'href' => b.ref , :target => "_blank" , title: b.summary %> </h6></div></summary>
-        <%= b.summary %>
+        <%= markdown(b.summary) %>
        </details> 
 	  </td>
 	  
