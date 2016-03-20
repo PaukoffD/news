@@ -68,7 +68,7 @@
 	
 	
 	 
-	 <td><h6><%= a.time.to_time().strftime("%R") %></h6>
+	 <td><h6><%= a.time.to_time().localtime.strftime("%R") %></h6>
 	  
 	 </td>
 	
@@ -91,7 +91,7 @@
 	 
 	
 	  
-	<td> <h6><%= b.time.to_time().strftime("%R") %></h6></td>
+	<td> <h6><%= b.time.to_time().localtime.strftime("%R") %></h6></td>
 	
 	  
 	  
