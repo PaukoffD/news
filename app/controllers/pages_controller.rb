@@ -27,7 +27,7 @@ class PagesController < ApplicationController
    j=1
  end  
         @p.ref=entry.url
-        @p.time=entry.published.to_time
+        @p.time=entry.published.to_datetime
         @p.source_id=s.id
  s2=entry.categories[0]
   
@@ -162,26 +162,12 @@ class PagesController < ApplicationController
   end 
 
   def rtags #remove tags
-   @pages = Page.all
+   
    tgs=Tagexcept.all
-   @pages.each do |pt|
-      i=0
-    
-      str=pt.tag_list
-
-
-       tgs.each do |s|
-      for j in 0..str.length do
-        if s.name==str[j]
-          pt.tag_list.remove(str[j],parse:true)
-         end 
-      end
-      
-      
-       pt.save
-      
-     end
-    #puts pt.tag_list
+   tgs.each do |pt|
+    result=ActsAsTaggableOn::Tag.where(name: pt.name)
+    ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
+	ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
     end   
   end 
 
