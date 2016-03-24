@@ -66,21 +66,7 @@ source=Source.all
     end 
     
   end
-#fixme не работает эта байда    
-	Page.all.reorder('created_at DESC')
-     @page1=Page.all.where(source_id: s)
-	 @p1=Newslast.new
-	
-	 @p1.title=@page1.last.title
-     @p1.time=@page1.last.created_at
-     @p1.source_id=s.id
-     @p1.ref=@page1.last.ref
-     @p1.save
-	 tmp=Newslast.all.where(source_id: s.id)
-	 if tmp.count >1
-	   p3=Newslast.first
-	   p3.delete
-	 end  
+
 end
 end
 
