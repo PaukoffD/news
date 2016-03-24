@@ -60,14 +60,10 @@ source=Source.all
        @p.category_id=cat1.id
        @p.summary=entry.summary
        @p.save
-    end
-    
-    
+   end
     end 
-    
- 
-
-
+  end
+end 
 end
 
 
