@@ -73,7 +73,7 @@ class PagesController < ApplicationController
     
     end 
     
-  end
+#  end
 #fixme не работает эта байда    
 # Page.all.reorder('created_at DESC')
 #     @page1=Page.all.where(source_id: s)
