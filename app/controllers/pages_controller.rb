@@ -158,7 +158,7 @@ class PagesController < ApplicationController
       
      end
     #puts pt.tag_list
-    end 
+   
 	tgs.each do |pt|
     result=ActsAsTaggableOn::Tag.where(name: pt.name)
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
