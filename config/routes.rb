@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   # get 'data/:data', to: 'pages#index', as: :data
    get 'info', to: 'pages#info'
    get 'remove_tags', to: 'pages#rtags'
+    get 'search_tags', to: 'pages#search_tags'
  end

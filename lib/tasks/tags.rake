@@ -14,3 +14,4 @@
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
 	ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
   end 
+  end

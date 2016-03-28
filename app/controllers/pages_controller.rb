@@ -141,6 +141,20 @@ end
   end 
 
 
+ def search_tags
+    #respond_to do |format|
+      
+    #    format.html { redirect_to :root, notice: 'Page was successfully updated.' }
+       
+   
+   # end
+   #@tags = ActsAsTaggableOn::Tag.all
+   #loa
+   # index
+  #  render :index
+  # @taggings = ActsAsTaggableOn::Tagging.all.count
+  # @source=Source.all.count
+  end 
   
   def info
    @pages=Page.all.count
