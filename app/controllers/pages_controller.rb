@@ -140,20 +140,19 @@ end
     end   
   end 
 
-
- def search_tags
-    #respond_to do |format|
-      
-    #    format.html { redirect_to :root, notice: 'Page was successfully updated.' }
-       
+def search_tags
    
-   # end
-   #@tags = ActsAsTaggableOn::Tag.all
-   #loa
-   # index
-  #  render :index
-  # @taggings = ActsAsTaggableOn::Tagging.all.count
-  # @source=Source.all.count
+  end 
+
+ def search_tags1
+    render :search_tags
+    @tag = params[:tag]
+    if @tag.blank?
+     loa
+     # redirect_to :root, notice: "Заполни"
+    else
+      redirect_to :index, notice: "ищем!"
+    end
   end 
   
   def info
@@ -172,6 +171,8 @@ end
   else
    if params[:data]
     @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
+  elsif params[:tags]
+    @pages = Page.tagged_with(params[:tags]['tag']).order('created_at DESC').page(params[:page])
     else
     @pages = Page.all.order('time DESC').page(params[:page])
     end
