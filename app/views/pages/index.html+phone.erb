@@ -2,36 +2,7 @@
 <p id="notice"><%= notice %></p>
 
 
-<table class="table">
-  <thead>
-    <tr>
-	  <th width="15%"> </th>
-	  <th width="85%"> </th>
-     </tr>
-  </thead>
 
-  
-  
-  
-  <tbody>
-  
-     <tr>
-	  <td>
-	  
-
-
-
-  
-	  
-	  
-	  
-<h4>Категориии</h4>
-<% @categories.each do |cat| %>
-	 
-	<h6><%= link_to cat.name, cat %></h6>
-<% end %>
-</td>	 
- <td>
 
 		
 
@@ -88,9 +59,7 @@
  
   
 </table>
-      </tr>
-  </tbody>
-</table>	 
+ 
 
 <%= paginate(@pages) %>
 

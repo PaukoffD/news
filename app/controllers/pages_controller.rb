@@ -68,6 +68,10 @@ class PagesController < ApplicationController
           @p.summary=entry.summary
          end 
         @p.save
+        @p=Page.last
+         ActsAsTaggableOn.delimiter = ([' ', ','])
+         @p.tag_list.add(@p.title, parse: true)
+         @p.save
       end
     end 
   end
