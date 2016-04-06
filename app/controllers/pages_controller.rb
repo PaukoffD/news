@@ -27,7 +27,7 @@ class PagesController < ApplicationController
            j=1
         end  
        @p.ref=entry.url
-       @p.time=entry.published.to_datetime
+       @p.time=entry.published.to_datetime.in_time_zone('Moscow')
        @p.source_id=s.id
        s2=entry.categories[0]
   
