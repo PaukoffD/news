@@ -106,31 +106,24 @@ end
   
   def atags
    ActsAsTaggableOn.delimiter = ([' ', ','])
-   @pages = Page.all
+   str1=ActsAsTaggableOn::Tagging.last
+   tmp1=str1.taggable_id.to_i
+   @pages = Page.where("pages.id > ? ",tmp1 )
+   #loa
    tgs=Tagexcept.all
     @pages.each do |pt|
-      i=0
-     if pt.tag_list.blank?
-      str=pt.tag_list.add(pt.title, parse: true)
-
-
-#       tgs.each do |s|
-#         for j in 0..str.length do
-#        if s.name==str[j]
-#          pt.tag_list.remove(str[j],parse:true)
-#         end 
-#        end
-      end
+    
+     str=pt.tag_list.add(pt.title, parse: true)  
+     
+     pt.save
       
-       pt.save
-      
-     end
+    end
     #puts pt.tag_list
    
-	tgs.each do |pt|
-    result=ActsAsTaggableOn::Tag.where(name: pt.name)
+	tgs.each do |tt|
+    result=ActsAsTaggableOn::Tag.where(name: tt.name)
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
-	ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
+	ActsAsTaggableOn::Tag.where(name: tt.name).delete_all
     end   
   end 
 

@@ -17,7 +17,7 @@
    </tr>
   </thead>
  
- <% for i in 0..4 do %> 
+ <% for i in 0..2 do %> 
  <div class="btn-group">
   
    <button type="button" class="btn btn-primary"><%= link_to (Date.today-i).strftime("%d-%m-%y"), data_path(data:(Date.today-i))  %></button>
@@ -35,7 +35,7 @@
 	
 	
 	 
-	 <td><h6><%= a.time.to_time().strftime("%R") %></h6>
+	 <td><h6><%= a.time.to_time().in_time_zone("Moscow").strftime("%R") %></h6>
 	  
 	 </td>
 	
