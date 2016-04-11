@@ -1,17 +1,22 @@
   task :tags => :environment do
-  	ActsAsTaggableOn.delimiter = ([' ', ','])
-   @pages = Page.all
+   ActsAsTaggableOn.delimiter = ([' ', ','])
+   str1=ActsAsTaggableOn::Tagging.last
+   tmp1=str1.taggable_id.to_i
+   @pages = Page.where("pages.id > ? ",tmp1 )
+   #loa
+   tgs=Tagexcept.all
     @pages.each do |pt|
-     if pt.tag_list.blank?
-      pt.tag_list.add(pt.title, parse: true)
-      pt.save
-     end
-   #  puts pt.tag_list
-    end   
-	tgs=Tagexcept.all
-	tgs.each do |pt|
-    result=ActsAsTaggableOn::Tag.where(name: pt.name)
+    
+     str=pt.tag_list.add(pt.title, parse: true)  
+     
+     pt.save
+      
+    end
+    #puts pt.tag_list
+   
+  tgs.each do |tt|
+    result=ActsAsTaggableOn::Tag.where(name: tt.name)
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
-	ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
-  end 
+  ActsAsTaggableOn::Tag.where(name: tt.name).delete_all
+    end   
   end

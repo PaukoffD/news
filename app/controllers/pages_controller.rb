@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  id          :integer          not null, primary key
+#  title       :string
+#  ref         :string
+#  time        :time
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  source_id   :integer          default(0)
+#  summary     :string
+#  category_id :integer          default(0)
+#  tagtitle    :string
+#
+
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
   require 'open-uri'
