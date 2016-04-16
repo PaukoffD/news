@@ -69,3 +69,4 @@ gem 'text'
 gem 'feedjira'
 gem 'acts-as-taggable-on'
 gem 'whenever', :require => false
+gem 'rack-mini-profiler'
