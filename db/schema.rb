@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310140316) do
+ActiveRecord::Schema.define(version: 20160421180104) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 20160310140316) do
     t.integer  "category_id", default: 0
     t.string   "tagtitle"
   end
+
+  add_index "pages", ["ref"], name: "index_pages_on_ref", unique: true
 
   create_table "sources", force: :cascade do |t|
     t.string   "name"

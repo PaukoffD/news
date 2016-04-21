@@ -13,11 +13,15 @@
 #  category_id :integer          default(0)
 #  tagtitle    :string
 #
+# Indexes
+#
+#  index_pages_on_ref  (ref) UNIQUE
+#
 
 class Page < ActiveRecord::Base
 belongs_to :source
 belongs_to :levpage
-validates :ref, uniqueness: true
+validates :ref, uniqueness: true  #validates_uniqueness_of :title, conditions: -> { where.not(status: 'archived') }
 acts_as_taggable_on :tags
 
 self.per_page = 250
