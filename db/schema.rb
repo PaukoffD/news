@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421180104) do
+ActiveRecord::Schema.define(version: 20160424175936) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -98,6 +98,8 @@ ActiveRecord::Schema.define(version: 20160421180104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "tagexcepts", ["name"], name: "index_tagexcepts_on_name", unique: true
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
