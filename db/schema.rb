@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424175936) do
+ActiveRecord::Schema.define(version: 20160425123335) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 20160424175936) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "levenstein_pages", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.integer  "count",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "levpages", force: :cascade do |t|
@@ -122,6 +131,9 @@ ActiveRecord::Schema.define(version: 20160424175936) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  add_index "tagoverlaps", ["name"], name: "index_tagoverlaps_on_name", unique: true
+  add_index "tagoverlaps", ["nametarget"], name: "index_tagoverlaps_on_nametarget", unique: true
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"

@@ -10,6 +10,11 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
+# Indexes
+#
+#  index_tagoverlaps_on_name        (name) UNIQUE
+#  index_tagoverlaps_on_nametarget  (nametarget) UNIQUE
+#
 
 class Tagoverlap < ActiveRecord::Base
 end

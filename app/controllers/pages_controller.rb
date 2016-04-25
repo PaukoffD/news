@@ -147,11 +147,19 @@ end
   def rtags #remove tags
    
    tgs=Tagexcept.all
+   tgsovlp=Tagoverlap.all
    tgs.each do |pt|
     result=ActsAsTaggableOn::Tag.where(name: pt.name)
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
 	ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
     end   
+	tgsovlp.each do |pt1|
+    result=ActsAsTaggableOn::Tag.where(name: pt1.name)
+	result1=ActsAsTaggableOn::Tag.where(name: pt1.nametarget)
+    ActsAsTaggableOn::Tagging.where(tag_id: result).update_all({:tag_id => result1})
+	ActsAsTaggableOn::Tag.where(name: pt1.name).update_all({:name => pt1.nametarget})
+    end   
+	
   end 
 
 def search_tags
@@ -162,7 +170,7 @@ def search_tags
     render :search_tags
     @tag = params[:tag]
     if @tag.blank?
-     loa
+     #loa
      # redirect_to :root, notice: "Заполни"
     else
       redirect_to :index, notice: "ищем!"
