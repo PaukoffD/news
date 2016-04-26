@@ -33,9 +33,10 @@
 	 ActsAsTaggableOn::Tag.where(name: pt1.name).delete_all
 	
 	else
-	
-	 ActsAsTaggableOn::Tagging.where(tag_id: result).update_all({:tag_id => result1})
+	if !result.blank?
+	 ActsAsTaggableOn::Tagging.where(tag_id: result).update_all({:tag_id => result[0]['id']})
 	 ActsAsTaggableOn::Tag.where(name: pt1.name).update_all({:name => pt1.nametarget})
+	end
 	end
     end   
   end
