@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20160425123335) do
   end
 
   add_index "tagoverlaps", ["name"], name: "index_tagoverlaps_on_name", unique: true
-  add_index "tagoverlaps", ["nametarget"], name: "index_tagoverlaps_on_nametarget", unique: true
+  add_index "tagoverlaps", ["nametarget"], name: "index_tagoverlaps_on_nametarget"
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"
