@@ -161,14 +161,16 @@ end
 	if !result.blank? && !result1.blank?
 	 res=result[0]['taggings_count']+result1[0]['taggings_count'] 
 	 result[0]['taggings_count']=res
-     ActsAsTaggableOn::Tagging.where(tag_id: result).update_all({:tag_id => result1})
+     ActsAsTaggableOn::Tagging.where(tag_id: result).update_all({:tag_id => result[0]['id']})
 	 
 	 ActsAsTaggableOn::Tag.where(name: pt1.nametarget).update_all({:taggings_count => res})
 	 ActsAsTaggableOn::Tag.where(name: pt1.name).delete_all
 	
 	else
-	 ActsAsTaggableOn::Tagging.where(tag_id: result).update_all({:tag_id => result1})
+	if !result.blank?
+	 ActsAsTaggableOn::Tagging.where(tag_id: result).update_all({:tag_id => result[0]['id']})
 	 ActsAsTaggableOn::Tag.where(name: pt1.name).update_all({:name => pt1.nametarget})
+	end
 	end
     end   
 	
