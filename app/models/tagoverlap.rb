@@ -13,7 +13,7 @@
 # Indexes
 #
 #  index_tagoverlaps_on_name        (name) UNIQUE
-#  index_tagoverlaps_on_nametarget  (nametarget) UNIQUE
+#  index_tagoverlaps_on_nametarget  (nametarget)
 #
 
 class Tagoverlap < ActiveRecord::Base
