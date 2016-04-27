@@ -2,6 +2,7 @@
 <p id="notice"><%= notice %></p>
 
 
+
 <table class="table">
   <thead>
     <tr>
@@ -14,6 +15,18 @@
   
   
   <tbody>
+ 
+<form class="navbar-form navbar-right" role="search">
+      
+     <% content_for :search do %>
+ 
+  <%= search_form_for @search do |f| %>
+    <%= f.text_field :title_cont, class: "radius-left expand", placeholder: "Поиск" %>
+    <%= f.submit "Search", class: "radius-right button" %>
+    
+	<% end %>
+   <% end %>
+      </form>
   
      <tr>
 	  <td>
@@ -120,7 +133,7 @@
   </tbody>
 </table>	 
 
-<%= paginate(@pages) %>
+<%#= paginate(@pages) %>
 
 
 

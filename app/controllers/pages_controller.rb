@@ -218,7 +218,8 @@ def search_tags
     end
  end
    @categories=Category.all
-
+   @search = Page.search(params[:q])
+   @pages = @search.result
   end
   
 def tag_cloud
