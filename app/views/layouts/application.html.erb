@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <%= yield(:search) %>
   <title>Новости</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -68,7 +69,8 @@
          <li class="right"><%= link_to 'Удаление тэгов', remove_tags_path %><span class="sr-only">(current)</span></a></li>
 		 <li class="right"><%= link_to 'Обьединение тэгов', tagoverlaps_path %><span class="sr-only">(current)</span></a></li>
 		 <li class="right"><%= link_to 'Поиск', search_tags_path %><span class="sr-only">(current)</span></a></li>
-               </ul>
+          
+		  </ul>
 
     
    
@@ -85,6 +87,8 @@
 
           <div class="fluidcontainer">
               <%= yield %>
+			  
+			    <%= debug(params) if Rails.env.development? %>
           </div>
 
      
