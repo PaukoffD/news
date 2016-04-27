@@ -20,6 +20,10 @@ class PagesController < ApplicationController
   require 'rubygems'
   require 'text'
   require 'time'
+
+include PagesHelper
+
+
   # GET /pages
   # GET /pages.json
   def load
@@ -207,14 +211,14 @@ def search_tags
    if params[:category]
      @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])
  elsif params[:tag]
-     @pages = Page.tagged_with(params[:tag]).order('created_at DESC').page(params[:page])
+     @pages = Page.tagged_with(params[:tag]).order('time DESC').page(params[:page])
   else
    if params[:data]
     @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
   elsif params[:tags]
-    @pages = Page.tagged_with(params[:tags]['tag']).order('created_at DESC').page(params[:page])
+    @pages = Page.tagged_with(params[:tags]['tag']).order('time DESC').page(params[:page])
     else
-    @pages = Page.all.order('time DESC').page(params[:page])
+    fetch_news
     end
  end
    @categories=Category.all

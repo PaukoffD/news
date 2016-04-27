@@ -15,12 +15,12 @@
 #
 
 module PagesHelper
-	def fetch_news
+def fetch_news
   @news =  $redis.get("news")
   if @news.nil?
-     @news = Page.all.to_json
+     @news = Page.all.order('time DESC').page(params[:page]).to_json
     $redis.set("news", @news)
-    # Expire the cache, every 5 hours
+    # Expire the cache, eorder('time DESC').page(params[:page]).very 5 hours
     $redis.expire("news",5.hour.to_i)
   end
   @news = JSON.load @news
