@@ -16,7 +16,6 @@
   
   <tbody>
  
-<form class="navbar-form navbar-right" role="search">
       
      <% content_for :search do %>
  
@@ -26,7 +25,7 @@
     
 	<% end %>
    <% end %>
-      </form>
+    
   
      <tr>
 	  <td>
@@ -133,7 +132,7 @@
   </tbody>
 </table>	 
 
-<%#= paginate(@pages) %>
+<%= paginate(@pages) %>
 
 
 
