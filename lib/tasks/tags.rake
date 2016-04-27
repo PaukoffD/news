@@ -9,6 +9,7 @@
    #@pages = Page.joins(:taggings).where('pages.id' => exists?  AND 'taggings.taggable_id' => nil ) #переписать все таки запрос
    @pages = Page.where("pages.id > ? ",tmp1 )
    tgs=Tagexcept.all
+   tgsovlp=Tagoverlap.all
     @pages.each do |pt|
     
      str=pt.tag_list.add(pt.title, parse: true)  
