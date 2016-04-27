@@ -1,9 +1,13 @@
   task :tags => :environment do
    ActsAsTaggableOn.delimiter = ([' ', ','])
    str1=ActsAsTaggableOn::Tagging.last
-   tmp1=str1.taggable_id.to_i
+   if str1.blank?
+    tmp1=0
+   else	
+    tmp1=str1.taggable_id.to_i 
+	end
+   #@pages = Page.joins(:taggings).where('pages.id' => exists?  AND 'taggings.taggable_id' => nil ) #переписать все таки запрос
    @pages = Page.where("pages.id > ? ",tmp1 )
-   #loa
    tgs=Tagexcept.all
     @pages.each do |pt|
     
