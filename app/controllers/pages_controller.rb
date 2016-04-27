@@ -219,7 +219,7 @@ def search_tags
  end
    @categories=Category.all
    @search = Page.search(params[:q])
-   @pages = @search.result.order('created_at DESC').page(params[:page])
+   @pages = @search.result.order('time DESC').page(params[:page])
   end
   
 def tag_cloud
