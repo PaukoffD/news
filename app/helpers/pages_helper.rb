@@ -18,7 +18,7 @@ module PagesHelper
 def fetch_news
   @pages =  $redis.get("pages")
   if @pages.nil?
-     @pages = Page.all.includes(:source).order('time DESC').page(params[:page]).to_json
+     @pages = Page.all.includes(:source).order('time DESC').to_json.page(params[:page])
     $redis.set("pages", @pages)
     # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
     $redis.expire("pages",1.hour.to_i)
