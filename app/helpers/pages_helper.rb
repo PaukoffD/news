@@ -16,13 +16,13 @@
 
 module PagesHelper
 def fetch_news
-  @news =  $redis.get("news")
-  if @news.nil?
-     @news = Page.all.order('time DESC').page(params[:page]).to_json
-    $redis.set("news", @news)
-    # Expire the cache, eorder('time DESC').page(params[:page]).very 5 hours
-    $redis.expire("news",5.hour.to_i)
+  @pages =  $redis.get("pages")
+  if @pages.nil?
+     @pages = Page.all.includes(:source).order('time DESC').page(params[:page]).to_json
+    $redis.set("pages", @pages)
+    # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
+    $redis.expire("pages",1.hour.to_i)
   end
-  @news = JSON.load @news
+  @pages = JSON.load @pages
 end
 end
