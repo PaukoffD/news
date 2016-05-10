@@ -204,6 +204,8 @@ def search_tags
    @tags = ActsAsTaggableOn::Tag.all.count
    @taggings = ActsAsTaggableOn::Tagging.all.count
    @source=Source.all.count
+   @s=Source.all
+   #loa
   end 
   
   def index
