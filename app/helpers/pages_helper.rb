@@ -15,13 +15,14 @@
 #
 
 module PagesHelper
+	require 'will_paginate/array' 
 def fetch_news
   @pages =  $redis.get("pages")
   if @pages.nil?
-     @pages = Page.all.includes(:source).order('time DESC').to_json.page(params[:page])
+     @pages = Page.all.order('time DESC').page(params[:page]).to_json
     $redis.set("pages", @pages)
     # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-    $redis.expire("pages",1.hour.to_i)
+    $redis.expire("pages",15.minute.to_i)
   end
   @pages = JSON.load @pages
 end
