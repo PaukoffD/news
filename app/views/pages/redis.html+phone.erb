@@ -11,14 +11,12 @@
  <thead>
   <tr>
     <th width="2%"></th>
-    <th width="48%"></th>
-    <th width="2%"></th>
-    <th width="48%"><center></center></th>
+    <th width="98%"></th>
    
    </tr>
   </thead>
  
- <% for i in 0..8 do %> 
+ <% for i in 0..2 do %> 
  <div class="btn-group">
   
    <button type="button" class="btn btn-primary"><%= link_to (Date.today-i).strftime("%d-%m-%y"), data_path(data:(Date.today-i))  %></button>
@@ -28,7 +26,7 @@
   <right>       <%= Time.zone.now().strftime("%T") %> </right>
   
   
-    <% @pages.each_slice(2) do |a, b| %>
+    <% @pages.each do |a| %>
  	
     <tr>
      
@@ -55,28 +53,10 @@
 	  
 	  
 	  
-  <% if b!=nil%>	
-	 
+ 
 	
 	  
-	<td> <h6><%= b["time"].to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
 	
-	  
-	  
-	  <td>
-	  <% if b["summary"].blank? %>
-	 <% b["summary"]= " " %>
-	 <% end %>
-	 
-       <details>
-       <summary><%#= image_tag(@sources[b['source_id']-1]['avatar__file_name'], class: 'avatar', :size => "20") %> <%=  link_to b["title"], nil, 'href' => b["ref"] , :target => "_blank" , title: b["summary"] %> </h6></div></summary>
-        <%= markdown(b["summary"]) %>
-       </details> 
-	  </td>
-	  
-	
-	  
-	 <% end %>  
 	 </tr>
 	
     <% end %>
