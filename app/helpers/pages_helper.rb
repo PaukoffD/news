@@ -27,14 +27,14 @@ def fetch_news
   end
   @pages = JSON.load @pages
 
-  #@sources =  $redis.get("sourses")
-  #if @sources.nil?
- #    @sources = Source.all.to_json
-  #  $redis.set("sources", @sources)
-    # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
- #   $redis.expire("sources",5.hours.to_i)
- # end
+  @sources =  $redis.get("sourses")
+  if @sources.nil?
+     @sources = Source.all.to_json
+    $redis.set("sources", @sources)
+     #Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
+    $redis.expire("sources",5.hours.to_i)
+  end
  
- # @sources = JSON.load @sources
+  @sources = JSON.load @sources
 end
 end

@@ -243,6 +243,7 @@ def search_tags
   end
   
  def redis
+  @source=Source.all
   fetch_news
   end 
   

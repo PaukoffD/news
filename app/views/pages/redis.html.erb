@@ -46,7 +46,7 @@
 	 <% a["summary"]= " " %>
 	 <% end %>
       <details>
-       <summary><%#= image_tag(@sources[a['source_id']-1]['avatar__file_name'], class: 'avatar', :size => "20") %> <%=  link_to a["title"], nil, 'href' => a["ref"] , :target => "_blank" , title: a["summary"] %></h6></div></summary>
+       <summary><%#= image_tag(@source[a['source_id']-1]['avatar__file_name'], class: 'avatar', :size => "20") %> <%=  link_to a["title"], nil, 'href' => a["ref"] , :target => "_blank" , title: a["summary"] %></h6></div></summary>
         <%= markdown(a["summary"]) %>
        </details> 
 
