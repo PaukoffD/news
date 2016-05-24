@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :tagoverlaps
   resources :tagexcepts
   resources :sources
@@ -18,5 +19,5 @@ Rails.application.routes.draw do
    get 'search_tags', to: 'pages#search_tags'
    post 'search_tags', to: 'pages#index'
    get 'redis', to: 'pages#redis'
-   
+   get 'rss', to: 'pages#rss'
  end

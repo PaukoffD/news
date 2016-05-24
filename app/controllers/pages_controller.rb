@@ -187,6 +187,13 @@ end
 def search_tags
    
   end 
+  
+  def rss
+   @source=Source.all
+
+  
+   
+  end  
 
  def search_tags1
     render :search_tags

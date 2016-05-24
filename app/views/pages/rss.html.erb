@@ -1,0 +1,26 @@
+<h1>Info</h1>
+
+
+
+
+ 
+<% @source.each do |a| %>
+   <% url=a.ref %>
+   <% feed = Feedjira::Feed.fetch_and_parse url %>
+   <%=  feed.entries.first %></br>
+   <%= feed.entries.first.author if !feed.entries.first.author.blank? %></br>
+   <!-- <%#= feed.entries.first.category if !feed.entries.first.category.blank? %> --></br>
+   <%#= feed.entries.first.comments %></br>
+   <%= feed.entries.first.summary %></br>
+   <%= feed.entries.first.image %></br>
+   <%#= feed.entries.first.guid %></br>
+   <%= feed.entries.first.url %></br>
+   <%= feed.entries.first.published %></br>
+   <%#= feed.entries.first.source %></br>
+   <%= feed.entries.first.title	%></br>
+ 
+<% end %> 
+
+
+
+<%= link_to 'Back', pages_path %>
