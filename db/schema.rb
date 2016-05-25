@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524082255) do
+ActiveRecord::Schema.define(version: 20160525115102) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 20160524082255) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "count"
+  end
+
+  create_table "infos", force: :cascade do |t|
+    t.integer  "source_id"
+    t.datetime "data"
+    t.integer  "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -99,6 +108,7 @@ ActiveRecord::Schema.define(version: 20160524082255) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "count"
   end
 
   create_table "tagexcepts", force: :cascade do |t|

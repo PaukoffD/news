@@ -1,13 +1,14 @@
 # == Schema Information
 #
-# Table name: categories
+# Table name: infos
 #
 #  id         :integer          not null, primary key
-#  name       :string
+#  source_id  :integer
+#  data       :datetime
+#  size       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  count      :integer
 #
 
-class Category < ActiveRecord::Base
+class Info < ActiveRecord::Base
 end
