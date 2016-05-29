@@ -75,13 +75,14 @@ class TagoverlapsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tagoverlap
-      @tagoverlap = Tagoverlap.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tagoverlap_params
-      params.require(:tagoverlap).permit(:tag_id, :name, :tagtarget_id, :nametarget)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tagoverlap
+    @tagoverlap = Tagoverlap.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def tagoverlap_params
+    params.require(:tagoverlap).permit(:tag_id, :name, :tagtarget_id, :nametarget)
+  end
 end

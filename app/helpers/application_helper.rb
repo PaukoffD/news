@@ -1,8 +1,8 @@
 module ApplicationHelper
-	def markdown(text)
+  def markdown(text)
     options = {
-            space_after_headers: true, 
-          }
+      space_after_headers: true
+    }
 
     extensions = {
       autolink:           true,

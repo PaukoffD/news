@@ -19,12 +19,10 @@
 #
 
 class Page < ActiveRecord::Base
-belongs_to :source
-belongs_to :levpage
-validates :ref, uniqueness: true  #validates_uniqueness_of :title, conditions: -> { where.not(status: 'archived') }
-acts_as_taggable_on :tags
+  belongs_to :source
+  belongs_to :levpage
+  validates :ref, uniqueness: true # validates_uniqueness_of :title, conditions: -> { where.not(status: 'archived') }
+  acts_as_taggable_on :tags
 
-self.per_page = 250
-
-
+  self.per_page = 250
 end
