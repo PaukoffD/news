@@ -56,12 +56,73 @@ class PagesController < ApplicationController
       end
 
   def atags
+      ActsAsTaggableOn.delimiter = [' ', ',']
+   str1 = ActsAsTaggableOn::Tagging.last
+   tmp1 = if str1.blank?
+     0
+   else
+     str1.taggable_id.to_i
+         end
+   # @pages = Page.joins(:taggings).where('pages.id' => exists?  AND 'taggings.taggable_id' => nil ) #переписать все таки запрос
+   @pages = Page.where('pages.id > ? ', tmp1)
+   # loa
+   tgs = Tagexcept.all
+   @pages.each do |pt|
+
+     str = pt.tag_list.add(pt.title, parse: true)
+
+    pt.save
+
+   end
+ # puts pt.tag_list
+
+    tgs.each do |tt|
+        result = ActsAsTaggableOn::Tag.where(name: tt.name)
+      ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
+    ActsAsTaggableOn::Tag.where(name: tt.name).delete_all
+   end
   end
 
   def rtags # remove tags
+    tgs = Tagexcept.all
+   tgsovlp = Tagoverlap.all
+   tgs.each do |pt|
+      result = ActsAsTaggableOn::Tag.where(name: pt.name)
+    ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
+     ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
+   end
+    tgsovlp.each do |pt1|
+        result = ActsAsTaggableOn::Tag.where(name: pt1.name)
+    result1 = ActsAsTaggableOn::Tag.where(name: pt1.nametarget)
+    # res=result.tagging_count+result1.tagging_count
+    
+    if !result.blank? && !result1.blank?
+      res = result[0]['taggings_count'] + result1[0]['taggings_count']
+     result[0]['taggings_count'] = res
+       ActsAsTaggableOn::Tagging.where(tag_id: result).update_all(tag_id: result[0]['id'])
+     
+     ActsAsTaggableOn::Tag.where(name: pt1.nametarget).update_all(taggings_count: res)
+     ActsAsTaggableOn::Tag.where(name: pt1.name).delete_all
+    
+    else
+    unless result.blank?
+     ActsAsTaggableOn::Tagging.where(tag_id: result).update_all(tag_id: result[0]['id'])
+     ActsAsTaggableOn::Tag.where(name: pt1.name).update_all(name: pt1.nametarget)
+    end
+    end
+   end
+  
   end
   
   def search_tags1
+    render :search_tags
+     @tag = params[:tag]
+     if @tag.blank?
+      # loa
+     # redirect_to :root, notice: "Заполни"
+     else
+       redirect_to :index, notice: "ищем!"
+     end
   end
 
   def search_tags
@@ -151,11 +212,17 @@ class PagesController < ApplicationController
    #csv_text = File.read('tags1.txt')
    csv = CSV.foreach('tags1.txt', :headers => false)
    csv.each do |row|
-    str=row.hash
+   a=row.to_s.split(";")
+   a.each do |b|
     tag = Tagexcept.new
-    lo
+    if b.match("\\[")
+       tag.name=b[2,b.length-2]
+     elsif  !b.match('\\]')
+       tag.name=b
+     end
+    tag.save
    end
-   
+   end
   end
 
   def create
