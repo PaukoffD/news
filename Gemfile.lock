@@ -337,6 +337,3 @@ DEPENDENCIES
   whenever
   will_paginate
   yaml_db
-
-BUNDLED WITH
-   1.12.5

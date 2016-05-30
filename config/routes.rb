@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'info', to: 'pages#info'
   get 'remove_tags', to: 'pages#rtags'
   get 'tagexport', to:   'pages#tagexport'
+  get 'tagimport', to:   'pages#tagimport'
   get 'search_tags', to: 'pages#search_tags'
   post 'search_tags', to: 'pages#index'
   get 'redis', to: 'pages#redis'

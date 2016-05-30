@@ -34,7 +34,7 @@
 <h4>Тэги</h4>
 <% ActsAsTaggableOn::Tag.most_used.each do |most| %>
 	 
-	<h6><%= link_to most.name, tag_path(most.name) %></h6>
+	<h6><%= link_to most.name, tag_path(most.name) %>  <%= most.taggings_count %></h6>
 <% end %>
   
 	  

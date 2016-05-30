@@ -20,181 +20,58 @@ class PagesController < ApplicationController
   require 'rubygems'
   require 'text'
   require 'time'
-#  require 'file'
+  require 'csv'
 
   include PagesHelper
 
   # GET /pages
   # GET /pages.json
   def load
-    source = Source.all
-
-   source.each do |s|
-  url = s.ref
-    i = 0
-    j = 0
-    feed = Feedjira::Feed.fetch_and_parse url
-    plast = Newslast.find_by(source_id: s.id)
-
-    feed.entries.each do |entry|
-    next unless j<1
-
-
-    @p = Page.new
-    @p.title = entry.title
-    if !plast.blank?
-       j=1 if plast.title==@p.title
-       @p.ref = entry.url
-       @p.time = entry.published.to_datetime.in_time_zone('Moscow')
-       @p.source_id = s.id
-       s2 = entry.categories[0]
-
-       cat1 = Category.find_by(name: s2)
-     if cat1.blank?
-      c = Category.new
-      c.name = entry.categories[0]
-               c.name=="Без категории" if c.name==nil
-      c.save
-      cat1 = Category.last
-     end
-       @p.category_id = cat1.id
-       @p.summary = entry.summary
-       @p.save
-    else
-      @p.ref = entry.url
-      @p.time = entry.published.to_datetime
-      @p.source_id = s.id
-      s2 = entry.categories[0]
-
-      cat1 = Category.find_by(name: s2)
-      if cat1.blank?
-         c = Category.new
-         c.name = entry.categories[0]
-               c.name=="Без категории" if c.name==nil
-         c.save
-         cat1 = Category.last
-       end
-      @p.category_id = cat1.id
-      if entry.summary.blank?
-
-        entry.summary = ' '
-       else
-        @p.summary = entry.summary
-       end
-      @p.save
-      @p = Page.last
-      ActsAsTaggableOn.delimiter = [' ', ',']
-      @p.tag_list.add(@p.title, parse: true)
-      @p.save
-     en
-    end
-   end
-end
-
-  def analyze
-    @pages = Page.all
-   i = 0
-   for j in 0..@pages.length - 2
-     lp = Levpage.new
-   s1 = @pages[j].title
-   lp.page_id = @pages[j].id
-   lp.name = @pages[j].title
-   i = j + 1
-   for i in i..@pages.length - 1
-     s2 = @pages[i].title
-    ld = Text::Levenshtein.distance(s1, s2)
-    puts ld, s1, s2, i, j
-       if ld < 15 && @pages[i].id != @pages[j].id
-     # lp1=Levpage.last
-         lp2 = Levpage.new
-     lp2.parent_id = lp.page_id
-     lp2.name = @pages[i].title
-     lp2.page_id = @pages[i].id
-     lp.save
-     lp2.save
-    end
-   end
- end
   end
 
+      def analyze
+        @pages = Page.all
+       i = 0
+       for j in 0..@pages.length - 2
+         lp = Levpage.new
+       s1 = @pages[j].title
+       lp.page_id = @pages[j].id
+       lp.name = @pages[j].title
+       i = j + 1
+       for i in i..@pages.length - 1
+         s2 = @pages[i].title
+        ld = Text::Levenshtein.distance(s1, s2)
+        puts ld, s1, s2, i, j
+           if ld < 15 && @pages[i].id != @pages[j].id
+         # lp1=Levpage.last
+             lp2 = Levpage.new
+         lp2.parent_id = lp.page_id
+         lp2.name = @pages[i].title
+         lp2.page_id = @pages[i].id
+         lp.save
+         lp2.save
+        end
+       end
+     end
+      end
+
   def atags
-    ActsAsTaggableOn.delimiter = [' ', ',']
-   str1 = ActsAsTaggableOn::Tagging.last
-   tmp1 = if str1.blank?
-     0
-   else
-     str1.taggable_id.to_i
-         end
-   # @pages = Page.joins(:taggings).where('pages.id' => exists?  AND 'taggings.taggable_id' => nil ) #переписать все таки запрос
-   @pages = Page.where('pages.id > ? ', tmp1)
-   # loa
-   tgs = Tagexcept.all
-   @pages.each do |pt|
-
-     str = pt.tag_list.add(pt.title, parse: true)
-
-    pt.save
-
-   end
- # puts pt.tag_list
-
-    tgs.each do |tt|
-        result = ActsAsTaggableOn::Tag.where(name: tt.name)
-      ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
-    ActsAsTaggableOn::Tag.where(name: tt.name).delete_all
-   end
   end
 
   def rtags # remove tags
-
-    tgs = Tagexcept.all
-   tgsovlp = Tagoverlap.all
-   tgs.each do |pt|
-      result = ActsAsTaggableOn::Tag.where(name: pt.name)
-    ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
-     ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
-   end
-    tgsovlp.each do |pt1|
-        result = ActsAsTaggableOn::Tag.where(name: pt1.name)
-    result1 = ActsAsTaggableOn::Tag.where(name: pt1.nametarget)
-    # res=result.tagging_count+result1.tagging_count
-    
-    if !result.blank? && !result1.blank?
-      res = result[0]['taggings_count'] + result1[0]['taggings_count']
-     result[0]['taggings_count'] = res
-       ActsAsTaggableOn::Tagging.where(tag_id: result).update_all(tag_id: result[0]['id'])
-     
-     ActsAsTaggableOn::Tag.where(name: pt1.nametarget).update_all(taggings_count: res)
-     ActsAsTaggableOn::Tag.where(name: pt1.name).delete_all
-    
-    else
-    unless result.blank?
-     ActsAsTaggableOn::Tagging.where(tag_id: result).update_all(tag_id: result[0]['id'])
-     ActsAsTaggableOn::Tag.where(name: pt1.name).update_all(name: pt1.nametarget)
-    end
-    end
-   end
+  end
   
+  def search_tags1
   end
 
   def search_tags
-  
-    end
+  end
 
   def rss
     @source = Source.all
   end
 
-  def search_tags1
-    render :search_tags
-     @tag = params[:tag]
-     if @tag.blank?
-      # loa
-     # redirect_to :root, notice: "Заполни"
-     else
-       redirect_to :index, notice: "ищем!"
-     end
-   end
+  
 
   def info
     @pages = Page.all.count
@@ -214,22 +91,20 @@ end
     elsif params[:tag]
       @pages = Page.tagged_with(params[:tag]).order('time DESC').page(params[:page])
     # loa
-    else
-    if params[:data]
+    elsif params[:data]
      @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
     elsif params[:tags]
      @pages = Page.tagged_with(params[:tags]['tag']).order('time DESC').page(params[:page])
-    else
-   if params[:q]
-    @search = Page.search(params[:q])
-   @pages = @search.result.order('time DESC').page(params[:page])
-   elsif params[:format]
+    elsif params[:q]
+     @search = Page.search(params[:q])
+    @pages = @search.result.order('time DESC').page(params[:page])
+    elsif params[:format]
       @pages = Page.where('source_id' => params['format']).order('time DESC').page(params[:page])
-   else
+    else
       @pages = Page.all.order('time DESC').page(params[:page])
-   end
-     end
-  end
+    end
+   
+  
    # loa
    @categories = Category.all
    @search = Page.search(params[:q])
@@ -237,14 +112,13 @@ end
   end
 
   def redis
-    @source = Source.all
+   @source = Source.all
    fetch_news
-   end
+  end
 
   def tag_cloud
-  
-      # @tags = Tags.all.order('count DESC')
-    end
+       # @tags = Tags.all.order('count DESC')
+  end
 
 
   # GET /pages/1
@@ -262,16 +136,26 @@ end
   end
 
   def tagexport
-    @tags = Tag.all
-loa
+    @tags = ActsAsTaggableOn::Tag.all
+    #loa
     f=File.new('tags.txt', 'w+') 
 
      @tags.each do |tt|
       f << tt.name + ";"
-      loa
+     # loa
      end
-   
+  end
 
+  def tagimport
+    #@tags = Tagecxept.new
+   #csv_text = File.read('tags1.txt')
+   csv = CSV.foreach('tags1.txt', :headers => false)
+   csv.each do |row|
+    str=row.hash
+    tag = Tagexcept.new
+    lo
+   end
+   
   end
 
   def create
