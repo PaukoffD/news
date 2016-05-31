@@ -30,57 +30,11 @@ class PagesController < ApplicationController
   end
 
       def analyze
-        @pages = Page.all
-       i = 0
-       for j in 0..@pages.length - 2
-         lp = Levpage.new
-       s1 = @pages[j].title
-       lp.page_id = @pages[j].id
-       lp.name = @pages[j].title
-       i = j + 1
-       for i in i..@pages.length - 1
-         s2 = @pages[i].title
-        ld = Text::Levenshtein.distance(s1, s2)
-        puts ld, s1, s2, i, j
-           if ld < 15 && @pages[i].id != @pages[j].id
-         # lp1=Levpage.last
-             lp2 = Levpage.new
-         lp2.parent_id = lp.page_id
-         lp2.name = @pages[i].title
-         lp2.page_id = @pages[i].id
-         lp.save
-         lp2.save
-        end
-       end
-     end
+    
       end
 
   def atags
-      ActsAsTaggableOn.delimiter = [' ', ',']
-   str1 = ActsAsTaggableOn::Tagging.last
-   tmp1 = if str1.blank?
-     0
-   else
-     str1.taggable_id.to_i
-         end
-   # @pages = Page.joins(:taggings).where('pages.id' => exists?  AND 'taggings.taggable_id' => nil ) #переписать все таки запрос
-   @pages = Page.where('pages.id > ? ', tmp1)
-   # loa
-   tgs = Tagexcept.all
-   @pages.each do |pt|
-
-     str = pt.tag_list.add(pt.title, parse: true)
-
-    pt.save
-
-   end
- # puts pt.tag_list
-
-    tgs.each do |tt|
-        result = ActsAsTaggableOn::Tag.where(name: tt.name)
-      ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
-    ActsAsTaggableOn::Tag.where(name: tt.name).delete_all
-   end
+   
   end
 
   def rtags # remove tags
@@ -96,13 +50,13 @@ class PagesController < ApplicationController
     result1 = ActsAsTaggableOn::Tag.where(name: pt1.nametarget)
     # res=result.tagging_count+result1.tagging_count
     
-    if !result.blank? && !result1.blank?
+     if !result.blank? && !result1.blank?
       res = result[0]['taggings_count'] + result1[0]['taggings_count']
-     result[0]['taggings_count'] = res
+      result[0]['taggings_count'] = res
        ActsAsTaggableOn::Tagging.where(tag_id: result).update_all(tag_id: result[0]['id'])
      
-     ActsAsTaggableOn::Tag.where(name: pt1.nametarget).update_all(taggings_count: res)
-     ActsAsTaggableOn::Tag.where(name: pt1.name).delete_all
+      ActsAsTaggableOn::Tag.where(name: pt1.nametarget).update_all(taggings_count: res)
+      ActsAsTaggableOn::Tag.where(name: pt1.name).delete_all
     
     else
     unless result.blank?
@@ -110,6 +64,11 @@ class PagesController < ApplicationController
      ActsAsTaggableOn::Tag.where(name: pt1.name).update_all(name: pt1.nametarget)
     end
     end
+  end
+    @cats=Category.all
+    @cats.each do |cat|
+      cat.count=Page.where(category_id: cat.id).count
+      cat.save
    end
   
   end
@@ -167,7 +126,7 @@ class PagesController < ApplicationController
    
   
    # loa
-   @categories = Category.all
+   @categories = Category.all.order('count DESC').limit(50)
    @search = Page.search(params[:q])
     # @pages = @search.result.order('time DESC').page(params[:page])
   end
@@ -265,7 +224,6 @@ class PagesController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
   def set_page
     @page = Page.find(params[:id])
   end
@@ -273,6 +231,6 @@ class PagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
   def page_params
     params.require(:page).permit!
- params.require(:newslast).permit!
+    params.require(:newslast).permit!
   end
 end

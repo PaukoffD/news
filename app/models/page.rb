@@ -24,5 +24,5 @@ class Page < ActiveRecord::Base
   validates :ref, uniqueness: true # validates_uniqueness_of :title, conditions: -> { where.not(status: 'archived') }
   acts_as_taggable_on :tags
 
-  self.per_page = 250
+  self.per_page = 500
 end

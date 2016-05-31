@@ -43,7 +43,7 @@
 <h4>Категориии</h4>
 <% @categories.each do |cat| %>
 	 
-	<h6><%= link_to cat.name, cat %></h6>
+	<h6><%= link_to cat.name, cat %>  <%= cat.count %></h6>
 <% end %>
 </td>	 
  <td>
