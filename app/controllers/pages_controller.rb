@@ -27,6 +27,69 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
+     source = Source.all
+
+   source.each do |s|
+  url = s.ref
+    i = 0
+    j = 0
+    feed = Feedjira::Feed.fetch_and_parse url
+    plast = Newslast.find_by(source_id: s.id)
+
+    feed.entries.each do |entry|
+    next unless j<1
+
+
+    @p = Page.new
+    @p.title = entry.title
+    if !plast.blank?
+       j=1 if plast.title==@p.title
+       @p.ref = entry.url
+       @p.time = entry.published.to_datetime.in_time_zone('Moscow')
+       @p.source_id = s.id
+       s2 = entry.categories[0]
+
+       cat1 = Category.find_by(name: s2)
+     if cat1.blank?
+      c = Category.new
+      c.name = entry.categories[0]
+               c.name=="Без категории" if c.name==nil
+      c.save
+      cat1 = Category.last
+     end
+       @p.category_id = cat1.id
+       @p.summary = entry.summary
+       @p.save
+    else
+      @p.ref = entry.url
+      @p.time = entry.published.to_datetime
+      @p.source_id = s.id
+      s2 = entry.categories[0]
+
+      cat1 = Category.find_by(name: s2)
+      if cat1.blank?
+         c = Category.new
+         c.name = entry.categories[0]
+               c.name=="Без категории" if c.name==nil
+         c.save
+         cat1 = Category.last
+       end
+      @p.category_id = cat1.id
+      if entry.summary.blank?
+
+        entry.summary = ' '
+       else
+        @p.summary = entry.summary
+       end
+      @p.save
+      @p = Page.last
+      ActsAsTaggableOn.delimiter = [' ', ',']
+      @p.tag_list.add(@p.title, parse: true)
+      @p.save
+     
+    end
+   end
+ end
   end
 
       def analyze
@@ -99,6 +162,17 @@ class PagesController < ApplicationController
    @taggings = ActsAsTaggableOn::Tagging.all.count
    @source = Source.all.count
    @s = Source.all
+    @s.each do |source|
+    pages_count = source.pages.all.count
+    info=Info.new #if Info.find(source_id: source.id).nil? 
+    info.size=pages_count
+    info.source_id=source.id
+    info.save
+    @pages = Page.uniq.pluck(:time)
+    @pages.each do |p|
+      puts p
+    end  
+   end 
     # loa
   end
 
