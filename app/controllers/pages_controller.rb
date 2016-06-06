@@ -27,69 +27,45 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-     source = Source.all
+    load_rss
 
-   source.each do |s|
-  url = s.ref
-    i = 0
-    j = 0
-    feed = Feedjira::Feed.fetch_and_parse url
-    plast = Newslast.find_by(source_id: s.id)
-
-    feed.entries.each do |entry|
-    next unless j<1
-
-
-    @p = Page.new
-    @p.title = entry.title
-    if !plast.blank?
-       j=1 if plast.title==@p.title
-       @p.ref = entry.url
-       @p.time = entry.published.to_datetime.in_time_zone('Moscow')
-       @p.source_id = s.id
-       s2 = entry.categories[0]
-
-       cat1 = Category.find_by(name: s2)
-     if cat1.blank?
-      c = Category.new
-      c.name = entry.categories[0]
-               c.name=="Без категории" if c.name==nil
-      c.save
-      cat1 = Category.last
-     end
-       @p.category_id = cat1.id
-       @p.summary = entry.summary
-       @p.save
-    else
-      @p.ref = entry.url
-      @p.time = entry.published.to_datetime
-      @p.source_id = s.id
-      s2 = entry.categories[0]
-
-      cat1 = Category.find_by(name: s2)
-      if cat1.blank?
-         c = Category.new
-         c.name = entry.categories[0]
-               c.name=="Без категории" if c.name==nil
-         c.save
-         cat1 = Category.last
-       end
-      @p.category_id = cat1.id
-      if entry.summary.blank?
-
-        entry.summary = ' '
-       else
-        @p.summary = entry.summary
-       end
-      @p.save
-      @p = Page.last
-      ActsAsTaggableOn.delimiter = [' ', ',']
-      @p.tag_list.add(@p.title, parse: true)
-      @p.save
-     
-    end
-   end
- end
+   page = Nokogiri::HTML(open("http://utro.ru/news/"))
+   page.xpath('/html/body/div[4]/div[4]/div/div[3]/div/div[3]').each do |link|
+    puts link
+  # Категории
+          # page.css(".ms_child").each do |link|
+          #puts link.text
+          #st=link.text
+          # c=Category.new
+        #      st = link.at_css("tr[4] td[1] div a").text
+           # puts link.at_css("tr[4] td[1] div a").text
+         # c.name=st
+         #//*[@id="new_content"]/div[3]/div/div/div/div/table/tbody/tr[3]/td[1]/div/a
+        # puts c.name
+        #c.save
+        #puts //*[@id="new_content"]/div[3]/div/div/div/div/table/tbody/tr[1]/td[1]/div/a
+        #end 
+  #puts page.at_css(".ob_rubrika").text 
+   
+    #@topics = Topic.order(:created_at).reorder('id DESC').all.page(params[:page])
+    #topic=Topic.order(:created_at).reorder('id DESC').last
+  #@forum = Forum.find(topic.forum_id)
+   #puts page.css("title")[0].name # => title
+   #puts page.css("title")[0].text
+  # page.css(".ob").each do |link|
+  #  @notice=Tmpnotice.new
+  #  @notice.notice=link.at_css(".ob_title").text
+ # s=link.at_css(".photo_preview")
+  #if !s.name="td"
+ #  @notice.ref_img=link.at_css(".photo_preview img")['src']
+ # end 
+ # @notice.ref_page=link.at_css(".ob_descr td a")['href']
+ # @notice.name=link.at_css(".author").text
+  
+  #@notice.text=link.at_css("p[3]").text
+  
+ # @notice.save
+   end 
   end
 
       def analyze
@@ -152,6 +128,7 @@ class PagesController < ApplicationController
 
   def rss
     @source = Source.all
+    lo
   end
 
   
@@ -178,7 +155,7 @@ class PagesController < ApplicationController
 
   def index
 
-
+  @translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')
 
     if params[:category]
       @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])

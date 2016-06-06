@@ -12,6 +12,7 @@
 #  avatar_file_size    :integer
 #  avatar_updated_at   :datetime
 #  count               :integer
+#  type                :text
 #
 
 class Source < ActiveRecord::Base

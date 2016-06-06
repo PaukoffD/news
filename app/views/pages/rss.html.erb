@@ -7,8 +7,9 @@
 <% @source.each do |a| %>
    <% url=a.ref %>
    <% feed = Feedjira::Feed.fetch_and_parse url %>
+   <%=  feed.etag %></br>
    <%=  feed.entries.first %></br>
-   <%= feed.entries.first.author if !feed.entries.first.author.blank? %></br>
+   <%= feed.entries.first.author  unless feed.entries.first.author.blank? %></br>
    <!-- <%#= feed.entries.first.category if !feed.entries.first.category.blank? %> --></br>
    <%#= feed.entries.first.comments %></br>
    <%= feed.entries.first.summary %></br>
