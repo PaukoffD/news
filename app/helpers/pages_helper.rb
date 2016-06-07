@@ -76,6 +76,7 @@ module PagesHelper
       @p.ref = entry.url
       @p.time = entry.published.to_datetime
       @p.source_id = s.id
+      @p.image=entry.image
       s2 = entry.categories[0]
 
       cat1 = Category.find_by(name: s2)
