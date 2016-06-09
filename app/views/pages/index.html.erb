@@ -1,6 +1,8 @@
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
 <p id="notice"><%= notice %></p>
-
 
 
 <table class="table">
@@ -30,6 +32,15 @@
      <tr>
 	  <td>
 	  
+ 
+ 
+  <%= form_for :data do |f| %>
+    <%= f.date_field :data, required: true, class: "datepicker" %>
+    
+    
+	
+   <% end %>
+ 
 
 <h4>Тэги</h4>
 <% ActsAsTaggableOn::Tag.most_used.each do |most| %>
@@ -90,7 +101,7 @@
 	 <% a.summary= " " %>
 	 <% end %>
       <details>
-       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%=  link_to (@translator.translate a.title, to: 'ru'), nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
+       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%#=  link_to (@translator.translate a.title, to: 'ru'), nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
         <%= image_tag(a.image, class: 'avatar', :size => "140") %> <%=markdown(a.summary) %>
        
        </details> 
@@ -134,6 +145,6 @@
 </table>	 
 
 <%= paginate(@pages) %>
-
+<%#= javascript_include_tag 'input-group'%>
 
 
