@@ -27,13 +27,19 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-    load_rss
+  #  load_rss
 
    page = Nokogiri::HTML(open("http://utro.ru/news/"))
-   page.xpath('/html/body/div[4]/div[4]/div/div[3]/div/div[3]').each do |link|
-   puts link.at_css(" a").text
+   link1=page.xpath('/html/body/div[4]/div[4]/div/div[3]/div')
+   link1.children.each do |link|
+   #puts link.at_css(" a").text
    # puts link
-   # loa
+   pg=Page.new
+   pg.title=link.children.at_css("a").text
+   pg.ref=link.children.at_css("a")['href']
+   pg.time= link.children.at_css(" div div div").text
+   pg.save
+   
   # Категории
           # page.css(".ms_child").each do |link|
           #puts link.text
@@ -141,23 +147,23 @@ class PagesController < ApplicationController
    @taggings = ActsAsTaggableOn::Tagging.all.count
    @source = Source.all.count
    @s = Source.all
-    @s.each do |source|
-    pages_count = source.pages.all.count
-    info=Info.new #if Info.find(source_id: source.id).nil? 
-    info.size=pages_count
-    info.source_id=source.id
-    info.save
-    @pages = Page.uniq.pluck(:time)
-    @pages.each do |p|
-      puts p
-    end  
-   end 
+  #  @s.each do |source|
+  #  pages_count = source.pages.all.count
+  #  info=Info.new #if Info.find(source_id: source.id).nil? 
+  #  info.size=pages_count
+  #  info.source_id=source.id
+  #  info.save
+  #  @pages = Page.uniq.pluck(:time)
+  #  @pages.each do |p|
+  #    puts p
+  #  end  
+  # end 
     # loa
   end
 
   def index
 
-  @translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')
+  #@translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')
 
     if params[:category]
       @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])
