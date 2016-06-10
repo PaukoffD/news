@@ -101,7 +101,7 @@
 	 <% a.summary= " " %>
 	 <% end %>
       <details>
-       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%#=  link_to (@translator.translate a.title, to: 'ru'), nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
+       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
         <%= image_tag(a.image, class: 'avatar', :size => "140") %> <%=markdown(a.summary) %>
        
        </details> 
