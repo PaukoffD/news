@@ -27,13 +27,13 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-   # load_rss
+    load_rss
 
    page = Nokogiri::HTML(open("http://utro.ru/news/"))
    page.xpath('/html/body/div[4]/div[4]/div/div[3]/div/div[3]').each do |link|
    puts link.at_css(" a").text
    # puts link
-    loa
+   # loa
   # Категории
           # page.css(".ms_child").each do |link|
           #puts link.text
