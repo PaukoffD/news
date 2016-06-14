@@ -130,6 +130,7 @@ end
        @p.ref = entry.url
        @p.time = entry.published.to_datetime.in_time_zone('Moscow')
        @p.source_id = s.id
+       @p.image=entry.image
        s2 = entry.categories[0]
 
        cat1 = Category.find_by(name: s2)
@@ -148,6 +149,7 @@ end
       @p.time = entry.published.to_datetime
       @p.source_id = s.id
       @p.image=entry.image
+      #loa
       s2 = entry.categories[0]
 
       cat1 = Category.find_by(name: s2)
