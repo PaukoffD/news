@@ -76,3 +76,4 @@ gem 'redis-rack-cache'
 gem 'ransack'
 gem 'yandex-translator'
 gem 'jquery-ui-rails'
+gem "paper_trail"

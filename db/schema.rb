@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607072355) do
+ActiveRecord::Schema.define(version: 20160614124846) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -100,6 +100,27 @@ ActiveRecord::Schema.define(version: 20160607072355) do
 
   add_index "pages", ["ref"], name: "index_pages_on_ref", unique: true
 
+  create_table "sourcehtmls", force: :cascade do |t|
+    t.integer  "source_id"
+    t.string   "url"
+    t.string   "common1"
+    t.string   "common2"
+    t.string   "common3"
+    t.string   "common4"
+    t.string   "common5"
+    t.string   "common6"
+    t.string   "common7"
+    t.string   "common8"
+    t.string   "common9"
+    t.string   "common10"
+    t.string   "title"
+    t.string   "ref"
+    t.string   "time"
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sources", force: :cascade do |t|
     t.string   "name"
     t.string   "ref"
@@ -172,5 +193,16 @@ ActiveRecord::Schema.define(version: 20160607072355) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",                     null: false
+    t.integer  "item_id",                       null: false
+    t.string   "event",                         null: false
+    t.string   "whodunnit"
+    t.text     "object",     limit: 1073741823
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
 
 end

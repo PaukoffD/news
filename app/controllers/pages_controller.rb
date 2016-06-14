@@ -142,7 +142,7 @@ class PagesController < ApplicationController
   
 
   def info
-    @pages = Page.all.count
+   @pages = Page.all.count
    @tags = ActsAsTaggableOn::Tag.all.count
    @taggings = ActsAsTaggableOn::Tagging.all.count
    @source = Source.all.count
