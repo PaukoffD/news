@@ -27,53 +27,9 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-  #  load_rss
+    load_rss
+  # load_html 
 
-   page = Nokogiri::HTML(open("http://utro.ru/news/"))
-   link1=page.xpath('/html/body/div[4]/div[4]/div/div[3]/div')
-   link1.children.each do |link|
-   #puts link.at_css(" a").text
-   # puts link
-   pg=Page.new
-   pg.title=link.children.at_css("a").text
-   pg.ref=link.children.at_css("a")['href']
-   pg.time= link.children.at_css(" div div div").text
-   pg.save
-   
-  # Категории
-          # page.css(".ms_child").each do |link|
-          #puts link.text
-          #st=link.text
-          # c=Category.new
-        #      st = link.at_css("tr[4] td[1] div a").text
-           # puts link.at_css("tr[4] td[1] div a").text
-         # c.name=st
-         #//*[@id="new_content"]/div[3]/div/div/div/div/table/tbody/tr[3]/td[1]/div/a
-        # puts c.name
-        #c.save
-        #puts //*[@id="new_content"]/div[3]/div/div/div/div/table/tbody/tr[1]/td[1]/div/a
-        #end 
-  #puts page.at_css(".ob_rubrika").text 
-   
-    #@topics = Topic.order(:created_at).reorder('id DESC').all.page(params[:page])
-    #topic=Topic.order(:created_at).reorder('id DESC').last
-  #@forum = Forum.find(topic.forum_id)
-   #puts page.css("title")[0].name # => title
-   #puts page.css("title")[0].text
-  # page.css(".ob").each do |link|
-  #  @notice=Tmpnotice.new
-  #  @notice.notice=link.at_css(".ob_title").text
- # s=link.at_css(".photo_preview")
-  #if !s.name="td"
- #  @notice.ref_img=link.at_css(".photo_preview img")['src']
- # end 
- # @notice.ref_page=link.at_css(".ob_descr td a")['href']
- # @notice.name=link.at_css(".author").text
-  
-  #@notice.text=link.at_css("p[3]").text
-  
- # @notice.save
-   end 
   end
 
       def analyze

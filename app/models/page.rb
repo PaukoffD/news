@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  title       :string
 #  ref         :string
-#  time        :time             default(NULL)
+#  time        :time
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source_id   :integer          default(0)
