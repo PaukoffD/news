@@ -24,5 +24,5 @@
 #
 
 class Sourcehtml < ActiveRecord::Base
-	belong_to :sources
+	belongs_to :sources
 end
