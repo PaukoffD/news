@@ -8,6 +8,9 @@
 #  size       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  page_count :integer
+#  tag_count  :integer
+#  tagging    :integer
 #
 
 class Info < ActiveRecord::Base
