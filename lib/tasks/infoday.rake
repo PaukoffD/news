@@ -1,5 +1,5 @@
 task infoday: :environment do
-	puts "beginning"
+	  puts "beginning"
    @pages = Page.all.count
    @tags = ActsAsTaggableOn::Tag.all.count
    @taggings = ActsAsTaggableOn::Tagging.all.count
@@ -7,8 +7,8 @@ task infoday: :environment do
    info=Info.first || Info.new
     puts info.page_count=@pages
 
-    puts info.tags_count=@tags
-    puts info.tagging_count=@taggings 
+    puts info.tag_count=@tags
+    puts info.tagging=@taggings 
     puts info.size=@source
     info.save
 end

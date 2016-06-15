@@ -117,6 +117,52 @@ class PagesController < ApplicationController
     # loa
   end
 
+def infoday
+   puts "beginning"
+   @pages = Page.all.count
+   @tags = ActsAsTaggableOn::Tag.all.count
+   @taggings = ActsAsTaggableOn::Tagging.all.count
+   @source = Source.all.count
+   @s = Source.all
+   info=Info.first || Info.new
+    puts info.page_count=@pages
+
+    puts info.tag_count=@tags
+    puts info.tagging=@taggings 
+    puts info.size=@source
+    info.save
+    
+  end
+
+def infoday1
+    
+   @info=Info.first
+   @source = Source.all
+   @source.each do |a|
+    info=Info.find_by_source_id(a.id) || Info.new
+    count=Page.where(source_id: a.id).count
+    info.source_id=a.id
+    info.page_count=count
+    info.save
+   end 
+   @source.each do |a|
+    
+    for i in 0..250 do
+    info=Info.new
+    count=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).count
+    @tags = ActsAsTaggableOn::Tag.all.count
+    puts count
+    info.source_id=a.id
+    info.page_count=count
+    info.data=Date.today-i
+    info.save
+   end
+   end 
+
+   @s = Source.includes(:infos)
+  end
+
+
   def index
 
   #@translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')

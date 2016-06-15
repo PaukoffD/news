@@ -14,5 +14,5 @@
 #
 
 class Info < ActiveRecord::Base
-	belongs_to :source
+	belongs_to :source, inverse_of: :infos
 end

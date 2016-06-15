@@ -22,4 +22,6 @@ Rails.application.routes.draw do
   post 'search_tags', to: 'pages#index'
   get 'redis', to: 'pages#redis'
   get 'rss', to: 'pages#rss'
+  get 'infoday', to: 'pages#infoday'
+  get 'infoday1', to: 'pages#infoday1'
 end
