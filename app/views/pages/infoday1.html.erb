@@ -8,7 +8,7 @@
 <%= 	  %>
 
 <% Source.includes(:infos).each do |a| %>
- <h5> <%= image_tag(a.avatar.url(:thumb), class: 'avatar', :size => "20") %>
+ <h5> <%= image_tag(a.avatar.url(:thumb), class: 'avatar1', :size => "20") %>
  <%=  link_to a.name, pages_path(a.id) %>
     |количество записей в базе: <%= a.infos.first.page_count %>
 	|  количество записей в базе за день: <%= Page.where(source_id: a.id, time: Date.today.to_time.beginning_of_day..Date.today.to_time.end_of_day).count %>
