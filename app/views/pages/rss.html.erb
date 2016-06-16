@@ -1,4 +1,4 @@
-<h1>Info</h1>
+<h1>RSS analize</h1>
 
 
 
@@ -7,9 +7,10 @@
 <% @source.each do |a| %>
    <% url=a.ref %>
    <% feed = Feedjira::Feed.fetch_and_parse url %>
-   <%=  feed.etag %></br>
-   <%=  feed.entries.first %></br>
-   <%#= feed.entries.first.author  unless feed.entries.first.author.blank? %></br>
+   <center><b><%=  a.name %></br>
+   <%=  a.ref %></center></b></br>
+   <%=  feed.entries.first.to_a %></br>
+   <%#= feed.entries.first.author  unless feed.entries.first.author.blank? %>
    <!-- <%#= feed.entries.first.category if !feed.entries.first.category.blank? %> --></br>
    <%#= feed.entries.first.comments %></br>
    <%#= feed.entries.first.summary %></br>
