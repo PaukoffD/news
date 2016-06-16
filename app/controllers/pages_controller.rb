@@ -92,7 +92,7 @@ class PagesController < ApplicationController
 
   def rss
     @source = Source.all
-    #lo
+   
   end
 
   
