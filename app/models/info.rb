@@ -17,6 +17,9 @@ class Info < ActiveRecord::Base
 	belongs_to :source, inverse_of: :infos
 
     def todays
-      Info.find_by(data: Date.current).last
+      @todays ||=Info.find_by(data: Date.current)
+    end	
+     def maptodays
+      @todays ||=Info.find_by(data: Date.current)
     end	
 end

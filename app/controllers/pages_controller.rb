@@ -99,10 +99,10 @@ class PagesController < ApplicationController
 
   def info
    @info=Info.first
-   @pages = Page.all.count
-   @tags = ActsAsTaggableOn::Tag.all.count
-   @taggings = ActsAsTaggableOn::Tagging.all.count
-   @source = Source.all.count
+   #@pages = Page.all.count
+   #@tags = ActsAsTaggableOn::Tag.all.count
+   #@taggings = ActsAsTaggableOn::Tagging.all.count
+   #@source = Source.all.count
    @s = Source.all
   #  @s.each do |source|
   #  pages_count = source.pages.all.count
