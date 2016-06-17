@@ -53,6 +53,8 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap3-datetimepicker-rails (4.17.37)
+      momentjs-rails (>= 2.8.1)
     builder (3.2.2)
     bullet (5.0.0)
       activesupport (>= 3.0.0)
@@ -137,6 +139,8 @@ GEM
     mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
+    momentjs-rails (2.11.1)
+      railties (>= 3.1)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -314,6 +318,7 @@ DEPENDENCIES
   babosa
   better_errors
   binding_of_caller
+  bootstrap3-datetimepicker-rails (~> 4.17.37)
   bullet
   byebug
   coffee-rails (~> 4.1.0)
@@ -324,6 +329,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   kaminari-bootstrap
+  momentjs-rails (>= 2.9.0)
   nokogiri
   paper_trail
   paperclip (~> 4.1)

@@ -34,12 +34,22 @@
 	  
  
  
-  <%= form_for :data do |f| %>
-    <%= f.date_field :data, required: true, class: "datepicker" %>
-    
-    
-	
-   <% end %>
+  <div style="overflow:hidden;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-2">
+                <div id="datetimepicker12"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker12').datetimepicker({
+                inline: true
+            });
+        });
+    </script>
+</div>
  
 
 <h4>Тэги</h4>
