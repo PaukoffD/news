@@ -20,7 +20,7 @@
  <% for i in 0..2 do %> 
  <div class="btn-group">
   
-   <button type="button" class="btn btn-primary"><%= link_to (Date.today-i).strftime("%d-%m-%y"), data_path(data:(Date.today-i))  %></button>
+   <button type="button" class="btn btn-default"><%= link_to (Date.today-i).strftime("%d-%m-%y"), data_path(data:(Date.today-i))  %></button>
   
     </div>
  <% end %> 
@@ -41,10 +41,12 @@
 	
 	  
 	 <td> 
-      <details>
-       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
-        <%= a.summary %>
-       </details> 
+      
+	 <% a.summary= " " if a.summary.blank?%>
+      <%= image_tag(a.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div>
+
+        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "140") unless a.image.blank? %> <%=markdown(a.summary) %></div>
+       
 
 	  
 	  </td>

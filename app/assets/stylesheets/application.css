@@ -13,7 +13,7 @@
  *
  *= require jquery-ui/core
  *= require jquery-ui/theme
- 
+ *= require bootstrap
  *= require bootstrap-datetimepicker
  *= require_tree .
  *= require_self

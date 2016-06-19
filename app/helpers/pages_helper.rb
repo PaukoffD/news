@@ -88,16 +88,19 @@ module PagesHelper
 end
     
   def fetch_news
+
+
     @pages = $redis.get('pages')
 
     if @pages.nil?
-      @pages = Page.all.order('time DESC').page(params[:page]).to_json
+      @pages = Page.order('time DESC').page(params[:page]).to_json
       $redis.set('pages', @pages)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
       $redis.expire('pages', 15.minute.to_i)
     end
     @pages = JSON.load @pages
 
+     
     @sources = $redis.get('sourses')
     if @sources.nil?
       @sources = Source.all.to_json
@@ -106,7 +109,7 @@ end
       $redis.expire('sources', 5.hours.to_i)
     end
 
-    @sources = JSON.load @sources
+    @sources = JSON.load @sources, :id, :name
   end
 
   def load_rss

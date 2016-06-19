@@ -19,6 +19,7 @@ class Info < ActiveRecord::Base
     def todays
       @todays ||=Info.find_by(data: Date.current)
     end	
+    
      def maptodays
       @todays ||=Info.find_by(data: Date.current)
     end	
