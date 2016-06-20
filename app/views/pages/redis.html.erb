@@ -47,7 +47,7 @@
 	 <% end %>
      
      <h6>  <%= image_tag(@source[@rel[a['source_id']]].avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a["title"], nil, 'href' => a["ref"] , :target => "_blank" , title: a["summary"] %></h6></div>
-        <%= markdown(a["summary"]) %>
+        <div class=inline><%= image_tag(a['image'], class: 'avatar', :size => "200") unless a['image'].blank? %> <%=markdown(a['summary']) %></div>
      
 
 	  
@@ -70,7 +70,7 @@
 	 
       <h6>  <%= image_tag(@source[@rel[b['source_id']]].avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to b["title"], nil, 'href' => b["ref"] , :target => "_blank" , title: b["summary"] %></h6></div>
         
-        <%= markdown(b["summary"]) %>
+       <div class=inline><%= image_tag(b['image'], class: 'avatar', :size => "200") unless b['image'].blank? %> <%=markdown(b['summary']) %></div>
       
 	  </td>
 	  
