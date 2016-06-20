@@ -24,4 +24,5 @@ Rails.application.routes.draw do
   get 'rss', to: 'pages#rss'
   get 'infoday', to: 'pages#infoday'
   get 'infoday1', to: 'pages#infoday1'
+  get 'infotoday', to: 'pages#infotoday'
 end

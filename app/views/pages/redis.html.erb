@@ -45,10 +45,10 @@
 	 <% if a["summary"].blank? %>
 	 <% a["summary"]= " " %>
 	 <% end %>
-      <details>
-       <summary><%#= image_tag(@source[a['source_id']-1]['avatar__file_name'], class: 'avatar', :size => "20") %> <%=  link_to a["title"], nil, 'href' => a["ref"] , :target => "_blank" , title: a["summary"] %></h6></div></summary>
+     
+     <h6>  <%= image_tag(@source[@rel[a['source_id']]].avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a["title"], nil, 'href' => a["ref"] , :target => "_blank" , title: a["summary"] %></h6></div>
         <%= markdown(a["summary"]) %>
-       </details> 
+     
 
 	  
 	  </td>
