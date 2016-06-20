@@ -68,10 +68,10 @@
 	 <% b["summary"]= " " %>
 	 <% end %>
 	 
-       <details>
-       <summary><%#= image_tag(@sources[b['source_id']-1]['avatar__file_name'], class: 'avatar', :size => "20") %> <%=  link_to b["title"], nil, 'href' => b["ref"] , :target => "_blank" , title: b["summary"] %> </h6></div></summary>
+      <h6>  <%= image_tag(@source[@rel[b['source_id']]].avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to b["title"], nil, 'href' => b["ref"] , :target => "_blank" , title: b["summary"] %></h6></div>
+        
         <%= markdown(b["summary"]) %>
-       </details> 
+      
 	  </td>
 	  
 	

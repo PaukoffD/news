@@ -90,33 +90,45 @@ end
   def fetch_news
 
 
-  #  @pages = $redis.get('pages')
+    @pages = $redis.get('pages')
 
     if @pages.nil?
       @pages = Page.order('time DESC').page(params[:page]).to_json
-     # $redis.set('pages', @pages)
+      $redis.set('pages', @pages)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-    #  $redis.expire('pages', 15.minute.to_i)
+      $redis.expire('pages', 15.minute.to_i)
     end
     @pages = JSON.load @pages
 
      
-  #  @sources = $redis.get('sourses')
+    @sources = $redis.get('sourses')
     if @sources.nil?
       @sources = Source.all.to_json
-    #  $redis.set('sources', @sources)
+      $redis.set('sources', @sources)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-   #   $redis.expire('sources', 5.hours.to_i)
+      $redis.expire('sources', 5.hours.to_i)
     end
 
     @sources = JSON.load @sources
-    @rel=Hash.new
-    i=0
-    @sources.each do |c|
-      @rel[i]=c['id']
-      i+=1
-    end  
+
+    @rel = $redis.hget(@rel,'rel')
+
+    if @rel.nil?
+        @rel=Hash.new
+        i=0
+        @sources.each do |c|
+         @rel[i]=c['id']
+         $redis.hset( @rel ,'rel', c['id'])
+         i+=1
+        end 
+     
     @rel=@rel.invert
+      
+      # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
+      $redis.expire('pages', 5.hours.to_i)
+    end
+    #@rel = JSON.load @rel
+    
   end
 
   def load_rss
