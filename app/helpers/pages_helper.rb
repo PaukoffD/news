@@ -96,7 +96,7 @@ end
       @pages = Page.order('time DESC').page(params[:page]).to_json
       $redis.set('pages', @pages)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-      $redis.expire('pages', 15.minute.to_i)
+      $redis.expire('pages', 17.minute.to_i)
     end
     @pages = JSON.load @pages
 
@@ -125,7 +125,7 @@ end
     @rel=@rel.invert
       
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-      $redis.expire('pages', 5.hours.to_i)
+      $redis.expire('rel', 5.hours.to_i)
     end
     #@rel = JSON.load @rel
     
@@ -158,7 +158,8 @@ end
       if entry.summary.blank?
         entry.summary = ' '
        else
-        @p.summary = entry.summary
+        @p.summary = entry.summary[0..400]
+       
        end
       @p.save
       @p = Page.last
