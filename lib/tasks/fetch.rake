@@ -25,7 +25,7 @@ task fetch: :environment do
       if entry.summary.blank?
         entry.summary = ' '
        else
-        @p.summary = entry.summary[0.400]
+        @p.summary = entry.summary[0..400]
        end
       @p.save
      
