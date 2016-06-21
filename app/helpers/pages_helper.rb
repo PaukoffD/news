@@ -96,7 +96,7 @@ end
       @pages = Page.order('time DESC').page(params[:page]).to_json
       $redis.set('pages', @pages)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-      $redis.expire('pages', 17.minute.to_i)
+      $redis.expire('pages', 17.minutes.to_i)
     end
     @pages = JSON.load @pages
 
