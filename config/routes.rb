@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :tagexcepts
   resources :sources
   resources :pages
+  resources :sourcehtmls
 
   root 'pages#index'
   get 'loadnews', to: 'pages#load'

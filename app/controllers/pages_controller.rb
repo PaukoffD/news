@@ -27,9 +27,21 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-    load_rss
-  # load_html 
-
+    source = Source.all
+    source.each do |s|
+      if s.html
+        load_rss
+      else  
+       page = Nokogiri::HTML(open('#{s.common1}')
+  link1="#{s.common2}"
+  link1.children.each do |link|
+   pg=Page.new
+   pg.title='#{s.title}'.to_s
+   pg.ref='#{s.ref}'.to_s
+   pg.time='#{s.time}'.to_s
+   pg.save
+      end   
+   end
   end
 
       def analyze
@@ -92,6 +104,11 @@ class PagesController < ApplicationController
 
   def rss
     @source = Source.all
+   
+  end
+
+  def html
+      @sources = Source.where(html: true)
    
   end
 

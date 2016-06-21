@@ -18,17 +18,30 @@ module PagesHelper
   require 'will_paginate/array'
 
   def load_html
-   page = Nokogiri::HTML(open("http://utro.ru/news/"))
-   link1=page.xpath('/html/body/div[4]/div[4]/div/div[3]/div')
-   link1.children.each do |link|
+   
+  page = Nokogiri::HTML(open('#{s.common1}')
+  link1="#{s.common1}"
+  link1.children.each do |link|
+   pg=Page.new
+   pg.title='#{s.title}'.to_s
+   pg.ref='#{s.ref}'.to_s
+   pg.time='#{s.time}'.to_s
+   pg.save
+  end
+end
+
+   #begin
+   #page = Nokogiri::HTML(open("http://utro.ru/news/"))
+   #link1=page.xpath('/html/body/div[4]/div[4]/div/div[3]/div')
+   #link1.children.each do |link|
    #puts link.at_css(" a").text
    # puts link
-   pg=Page.new
-   pg.title=link.children.at_css("a").text
-   pg.ref=link.children.at_css("a")['href']
-   pg.time= link.children.at_css(" div div div").text
-   pg.save
-   
+   #pg=Page.new
+   #pg.title=link.children.at_css("a").text
+   #pg.ref=link.children.at_css("a")['href']
+   #pg.time= link.children.at_css(" div div div").text
+   #pg.save
+   #end
   # Категории
           # page.css(".ms_child").each do |link|
           #puts link.text
@@ -62,30 +75,33 @@ module PagesHelper
   #@notice.text=link.at_css("p[3]").text
   
  # @notice.save
-   end 
-   page = Nokogiri::HTML(open("http://rueconomics.ru"))
-   page.xpath('//*[contains(@class,"news")]').each do |link|
+ # end 
+
+ #begin rueconomics
+   #page = Nokogiri::HTML(open("http://rueconomics.ru"))
+   #page.xpath('//*[contains(@class,"news")]').each do |link|
    #link1.children.each do |link|
    #puts link.at_css(" a").text
-   next if link.values[0].match('city')
-   next if link.values[0].match('choose')
-   next if link.values[0].match('post')
-   next if link.values[0].match('category')
-   next if link.values[0].match('main')
-   next if link.values[0].match('border')
-    puts link
+   #next if link.values[0].match('city')
+   #next if link.values[0].match('choose')
+   #next if link.values[0].match('post')
+   #next if link.values[0].match('category')
+   #next if link.values[0].match('main')
+   #next if link.values[0].match('border')
+    #puts link
    #loa
-   pg=Page.new
-   pg.title=link.at_css("a").values[1]
-   puts pg
-   pg.ref=link.at_css("a").values[0]
-   puts pg
-   d=Date.today
-   pg.time= link.at_css("div div").text.to_datetime
-   puts pg
-   pg.save
-  end
-end
+   #pg=Page.new
+   #pg.title=link.at_css("a").values[1]
+   #puts pg
+   #pg.ref=link.at_css("a").values[0]
+   #puts pg
+   #d=Date.today
+   #pg.time= link.at_css("div div").text.to_datetime
+   #puts pg
+   #pg.save
+  #end
+  # end rueconomics
+#end
     
   def fetch_news
 

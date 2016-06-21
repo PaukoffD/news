@@ -60,15 +60,6 @@ ActiveRecord::Schema.define(version: 20160621130623) do
     t.integer  "tagging"
   end
 
-  create_table "levenstein_pages", force: :cascade do |t|
-    t.integer  "page_id"
-    t.integer  "parent_id"
-    t.string   "name"
-    t.integer  "count",      default: 0
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
   create_table "levpages", force: :cascade do |t|
     t.integer  "page_id"
     t.integer  "parent_id"
