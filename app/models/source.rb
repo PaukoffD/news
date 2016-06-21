@@ -13,6 +13,7 @@
 #  avatar_updated_at   :datetime
 #  count               :integer
 #  type                :text
+#  html                :boolean
 #
 
 class Source < ActiveRecord::Base

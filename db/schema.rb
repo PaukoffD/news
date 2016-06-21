@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615120545) do
+ActiveRecord::Schema.define(version: 20160621130623) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20160615120545) do
     t.datetime "avatar_updated_at"
     t.integer  "count"
     t.text     "type"
+    t.boolean  "html"
   end
 
   create_table "tagexcepts", force: :cascade do |t|

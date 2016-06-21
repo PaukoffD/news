@@ -25,4 +25,5 @@ Rails.application.routes.draw do
   get 'infoday', to: 'pages#infoday'
   get 'infoday1', to: 'pages#infoday1'
   get 'infotoday', to: 'pages#infotoday'
+  get 'html', to: 'pages#html'
 end
