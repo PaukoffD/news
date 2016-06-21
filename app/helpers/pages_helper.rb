@@ -144,7 +144,7 @@ end
       @p.source_id = s.id
       @p.image=entry.image
       s2 = entry.categories[0]
-      cat1 = Category.find_by(name: s2)
+      cat1 = Category.find_by(name: s2) || Category.new
       cat1.name="Без категории" if cat1.id==19
       cat1.save
       if cat1.blank?
