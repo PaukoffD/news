@@ -19,8 +19,8 @@ module PagesHelper
 
   def load_html
    
-  page = Nokogiri::HTML(open('#{s.common1}')
-  link1="#{s.common1}"
+  page = Nokogiri::HTML(open('#{s.common1}'))
+  link1=page.xpath("#{s.common1}")
   link1.children.each do |link|
    pg=Page.new
    pg.title='#{s.title}'.to_s

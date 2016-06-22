@@ -32,18 +32,21 @@ class PagesController < ApplicationController
       if s.html
         load_rss
       else  
-       page = Nokogiri::HTML(open('#{s.common1}')
-  link1="#{s.common2}"
-  link1.children.each do |link|
-   pg=Page.new
-   pg.title='#{s.title}'.to_s
-   pg.ref='#{s.ref}'.to_s
-   pg.time='#{s.time}'.to_s
-   pg.save
-      end   
-   end
-  end
-
+        ss=Sourcehtml.first
+       page = Nokogiri::HTML(open("#{ss.common1}"))
+       link1=page.xpath("#{ss.common2}")
+       link1.children.each do |link|
+        pg=Page.new
+        pg.title=%x("#{ss.title}")
+        loa
+        pg.ref="#{ss.ref}".to_s
+        pg.time="#{ss.time}".to_s
+        pg.source_id=ss.source_id
+        pg.save
+       end   
+      end
+    end
+ end
       def analyze
     
       end
