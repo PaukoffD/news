@@ -37,10 +37,11 @@ class PagesController < ApplicationController
        link1=page.xpath("#{ss.common2}")
        link1.each do |link|
         pg=Page.new
-        pg.title=%x("link.#{ss.title}")
-        loa
-        pg.ref=%x("#{ss.ref}")
-        pg.time="#{ss.time}".to_s
+        pg.title=eval("#{ss.title}")
+        ref=eval("#{ss.ref}")
+        pg.ref=ss.url+ref
+        tt=eval("#{ss.time}")
+        pg.time=tt.to_datetime
         pg.source_id=ss.source_id
         pg.save
         

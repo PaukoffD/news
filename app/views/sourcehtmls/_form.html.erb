@@ -1,4 +1,4 @@
-<%= simple_form_for(@source) do |f| %>
+<%= simple_form_for [@source,@sourcehtml] do |f| %>
   <%= f.error_notification %>
 
  <form role="form">
@@ -25,7 +25,7 @@
             <%= f.text_field :avatar, disabled: true  %>
    </div>
     
-<%= f.simple_fields_for :htmls do |q| %>
+<%= f.simple_fields_for @sourcehtml do |q| %>
     
     <%=  q.input :url, label: "Url", class: 'form-control'   %>
     <%=  q.input :common1, label: "Common", class: 'form-control'   %>

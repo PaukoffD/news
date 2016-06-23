@@ -23,6 +23,11 @@
    float: left;
    padding: 0 20px 20px 0;
 }
+.avatar1 {
+   float: left;
+   size :  20;
+   
+}
 
 img {
 	max-width: 50%;
