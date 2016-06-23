@@ -150,6 +150,7 @@ end
   def load_rss
    source = Source.all
    source.each do |s|
+   if !s.html
     url = s.ref
     feed = Feedjira::Feed.fetch_and_parse url
     feed.entries.each do |entry|
@@ -183,6 +184,7 @@ end
       @p.tag_list.add(@p.title, parse: true)
       @p.save
      end
+    end 
    end  
  end
 end

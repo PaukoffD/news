@@ -29,20 +29,21 @@ class PagesController < ApplicationController
   def load
     source = Source.all
     source.each do |s|
-      if s.html
+      if !s.html
         load_rss
       else  
         ss=Sourcehtml.first
        page = Nokogiri::HTML(open("#{ss.common1}"))
        link1=page.xpath("#{ss.common2}")
-       link1.children.each do |link|
+       link1.each do |link|
         pg=Page.new
-        pg.title=%x("#{ss.title}")
+        pg.title=%x("link.#{ss.title}")
         loa
-        pg.ref="#{ss.ref}".to_s
+        pg.ref=%x("#{ss.ref}")
         pg.time="#{ss.time}".to_s
         pg.source_id=ss.source_id
         pg.save
+        
        end   
       end
     end
@@ -50,6 +51,28 @@ class PagesController < ApplicationController
       def analyze
     
       end
+
+ def tmp
+    #source = Source.all
+   # source.each do |s|
+      
+      #  ss=Sourcehtml.first
+       page = Nokogiri::HTML(open("http://utro.ru/news/"))
+
+       link1=page.xpath('//*[contains(@class,"inside")]')
+       
+       link1.each do |link|
+        
+        pg=Page.new
+        pg.title=link.children.at_css("a").text
+        
+        pg.ref=link.children.at_css("a")['href']
+        pg.time=link.children.at_css(" div").text.to_datetime
+       # pg.source_id=ss.source_id
+        pg.save
+      
+       end   
+      end     
 
   def atags
    
