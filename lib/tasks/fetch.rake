@@ -9,8 +9,8 @@ task fetch: :environment do
       @p.ref = entry.url
       @p.time = entry.published.to_datetime
       @p.source_id = s.id
-      @p.image=entry.image
-      s2 = entry.categories[0]
+      @p.image=entry.image if defined? entry.image
+      s2 = entry.categories[0] if defined? entry.category
       cat1 = Category.find_by(name: s2)
       #cat1.name="Без категории" if cat1.name=="19"
       #cat1.save

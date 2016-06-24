@@ -12,6 +12,7 @@
     
 <%= simple_form_for [@sourcehtml] do |q| %>
     
+    <%=  q.hidden_field :source_id, :value => @source.id %>
     <%=  q.input :url, label: "Url", class: 'form-control'   %>
     <%=  q.input :common1, label: "Common", class: 'form-control'   %>
     <%=  q.input :common2, label: "Common", class: 'form-control'   %>

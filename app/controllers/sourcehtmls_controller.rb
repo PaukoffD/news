@@ -14,17 +14,17 @@ class SourcehtmlsController < ApplicationController
   end
 
   def new
-    @source = Source.find(params[:id])
+    @source = Source.find(sourcehtml_params[:source_id]) unless  sourcehtml_params[:source_id].blank?
     @sourcehtml=Sourcehtml.new
   end
 
   def edit
-    @source = Source.find(params[:id])
-    #@sourcehtml = Sourcehtml.find_by_source_id(params[:id])
+    @source = Source.find(params[:id]) 
+    @sourcehtml = Sourcehtml.find_by_source_id(params[:id]) || Sourcehtml.new
   end
 
   def create
-    @source = Source.find(params[:id])
+     @source = Source.find(sourcehtml_params[:source_id]) unless  sourcehtml_params[:source_id].blank?
     @sourcehtml = Sourcehtml.new(sourcehtml_params)
 
     respond_to do |format|
@@ -39,7 +39,7 @@ class SourcehtmlsController < ApplicationController
   end
 
   def update
-    #@source = Source.find(params[:id])
+    @sourcehtml = Sourcehtml.find(params[:id])
     respond_to do |format|
       if @sourcehtml.update(sourcehtml_params)
         format.html { redirect_to @sourcehtml, notice: 'Source was successfully updated.' }
