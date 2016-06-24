@@ -2,9 +2,9 @@ task fetch: :environment do
  source = Source.all
    source.each do |s|
     if !s.html
-    url = s.ref
-    feed = Feedjira::Feed.fetch_and_parse url
-    feed.entries.each do |entry|
+     url = s.ref
+     feed = Feedjira::Feed.fetch_and_parse url
+     feed.entries.each do |entry|
       @p = Page.new
       @p.title = entry.title
       @p.ref = entry.url
@@ -47,5 +47,5 @@ else
         pg.save
         
        end   
-      end
+      
 end
