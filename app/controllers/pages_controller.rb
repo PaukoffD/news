@@ -58,17 +58,21 @@ class PagesController < ApplicationController
    # source.each do |s|
       
       #  ss=Sourcehtml.first
-       page = Nokogiri::HTML(open("http://utro.ru/news/"))
+       page = Nokogiri::HTML(open("https://cont.ws"))
 
-       link1=page.xpath('//*[contains(@class,"inside")]')
+       link1=page.xpath('//*[contains(@class,"post_prv")]')
        
        link1.each do |link|
         
         pg=Page.new
-        pg.title=link.children.at_css("a").text
+        #loa
+        pg.title=link.at_css("h3 a").text if defined? link.at_css("h3 a").text
         
-        pg.ref=link.children.at_css("a")['href']
-        pg.time=link.children.at_css(" div").text.to_datetime
+        pg.ref=link.at_css("h3 a")['href'] if defined? link.at_css("h3 a")['href']
+        pg.time=link.at_css("span").text.delete("Сегодня ") if defined? link.at_css("span").text.delete("Сегодня ")
+        pg.image=link.at_css('div a img')['src'] if defined? link.at_css('div a img')['src']
+        pg.summary=link.children[7].text if defined? link.children[7].text
+        # loa
        # pg.source_id=ss.source_id
         pg.save
       
