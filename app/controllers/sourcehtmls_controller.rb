@@ -1,8 +1,13 @@
 class SourcehtmlsController < ApplicationController
-  before_action :set_source, only: [:show, :edit, :update, :destroy]
+  before_action :set_sourcehtml, only: [:show, :edit, :update, :destroy]
 
   def index
-    @sources = Source.all
+    @sourcehtml = Sourcehtml.all
+  end
+
+  def html
+      @sources = Source.where(html: true)
+   
   end
 
   def show
@@ -15,7 +20,7 @@ class SourcehtmlsController < ApplicationController
 
   def edit
     @source = Source.find(params[:id])
-    @sourcehtml = Sourcehtml.where(source_id: params[:id])
+    #@sourcehtml = Sourcehtml.find_by_source_id(params[:id])
   end
 
   def create
@@ -34,9 +39,9 @@ class SourcehtmlsController < ApplicationController
   end
 
   def update
-    @source = Source.find(params[:id])
+    #@source = Source.find(params[:id])
     respond_to do |format|
-      if @source.update(source_params)
+      if @sourcehtml.update(sourcehtml_params)
         format.html { redirect_to @sourcehtml, notice: 'Source was successfully updated.' }
         format.json { render :show, status: :ok, location: @source }
       else
@@ -47,7 +52,7 @@ class SourcehtmlsController < ApplicationController
   end
 
   def destroy
-    @source.destroy
+    @sourcehtml.destroy
     respond_to do |format|
       format.html { redirect_to sourceshtml_url, notice: 'Source was successfully destroyed.' }
       format.json { head :no_content }
@@ -57,8 +62,8 @@ class SourcehtmlsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_source
-    @sourcehtml = Sourcehtml.where(source_id: params[:id])
+  def set_sourcehtml
+    @sourcehtml = Sourcehtml.find_by_source_id(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
