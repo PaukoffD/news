@@ -1,10 +1,9 @@
 task fetch: :environment do
  source = Source.all
    source.each do |s|
-    if !s.html
-     url = s.ref
-     feed = Feedjira::Feed.fetch_and_parse url
-     feed.entries.each do |entry|
+    url = s.ref
+    feed = Feedjira::Feed.fetch_and_parse url
+    feed.entries.each do |entry|
       @p = Page.new
       @p.title = entry.title
       @p.ref = entry.url
@@ -30,22 +29,6 @@ task fetch: :environment do
        end
       @p.save
      
-     end  
-   end
-else  
-        ss=Sourcehtml.first
-       page = Nokogiri::HTML(open("#{ss.common1}"))
-       link1=page.xpath("#{ss.common2}")
-       link1.each do |link|
-        pg=Page.new
-        pg.title=eval("#{ss.title}")
-        ref=eval("#{ss.ref}")
-        pg.ref=ss.url+ref
-        tt=eval("#{ss.time}")
-        pg.time=tt.to_datetime
-        pg.source_id=ss.source_id
-        pg.save
-        
-       end   
-      
+    end  
+  end
 end
