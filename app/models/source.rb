@@ -25,4 +25,8 @@ class Source < ActiveRecord::Base
                              default_url: '/images/:style/missing.png'
   validates_attachment_content_type :avatar, size: { in: 0..500.kilobytes }, content_type: /\Aimage\/.*\Z/
   has_paper_trail
+
+scope :rss, -> { where html: false }
+scope :html,-> { where html: true }
+
 end
