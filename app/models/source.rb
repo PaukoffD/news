@@ -26,7 +26,7 @@ class Source < ActiveRecord::Base
   validates_attachment_content_type :avatar, size: { in: 0..500.kilobytes }, content_type: /\Aimage\/.*\Z/
   has_paper_trail
 
-scope :rss, -> { where html: false }
+scope :rss, -> { where html: nil }
 scope :html,-> { where html: true }
 
 end
