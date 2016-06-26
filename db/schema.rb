@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621130623) do
+ActiveRecord::Schema.define(version: 20160626182935) do
 
   create_table "analyze_titles", force: :cascade do |t|
     t.integer  "page_id"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 20160621130623) do
     t.integer  "tag_count"
     t.integer  "tagging"
   end
+
+  add_index "infos", ["source_id", "data"], name: "index_infos_on_source_id_and_data", unique: true
 
   create_table "levpages", force: :cascade do |t|
     t.integer  "page_id"

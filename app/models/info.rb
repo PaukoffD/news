@@ -12,6 +12,10 @@
 #  tag_count  :integer
 #  tagging    :integer
 #
+# Indexes
+#
+#  index_infos_on_source_id_and_data  (source_id,data) UNIQUE
+#
 
 class Info < ActiveRecord::Base
 	belongs_to :source, inverse_of: :infos

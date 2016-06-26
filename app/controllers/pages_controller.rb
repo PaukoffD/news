@@ -169,16 +169,16 @@ class PagesController < ApplicationController
 def infoday
    puts "beginning"
    @pages = Page.all.count
-   @tags = ActsAsTaggableOn::Tag.all.count
+   @tags = ActsAsTaggableOn::Tag.count
    @taggings = ActsAsTaggableOn::Tagging.all.count
    @source = Source.all.count
    @s = Source.all
    info=Info.first || Info.new
-    puts info.page_count=@pages
+    info.page_count=@pages
 
-    puts info.tag_count=@tags
-    puts info.tagging=@taggings 
-    puts info.size=@source
+    info.tag_count=@tags
+    info.tagging=@taggings 
+    info.size=@source
     info.save
     @info=Info.first
   end
@@ -220,7 +220,7 @@ def infoday1
    @source.each do |a|
     
     for i in 0..250 do
-    info=Info.new
+    info=Info.find_by_source_id(a.id).where(data: (Date.today-i) ) || Info.new
     count=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).count
     @tags = ActsAsTaggableOn::Tag.all.count
     @pg=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).pluck(:id)
