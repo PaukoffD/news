@@ -8,7 +8,7 @@ task html: :environment do
        link1=page.xpath("#{ss.common2}")
        link1.each do |link|
         
-        title=eval("#{ss.title}") if defined? link.at_css("h3 a").text
+        title=eval("#{ss.title}") if defined? eval("#{ss.title}")
         next if title.nil?
         pg=Page.new
         pg.title=title
@@ -17,7 +17,8 @@ task html: :environment do
         tt=eval("#{ss.time}")
         pg.time=tt.to_datetime
         pg.source_id=ss.source_id
-        puts pg
+        pg.image=eval("#{ss.image}") if defined? eval("#{ss.image}")
+        pg.summary=eval("#{ss.summary}") if defined? eval("#{ss.summary}")
         pg.save
       end 
     end
