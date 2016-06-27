@@ -28,13 +28,18 @@ class PagesController < ApplicationController
   # GET /pages.json
   def load
    source = Source.all
+   shtml= Sourcehtml.all
     source.html.each do |s|
-       ss=Sourcehtml.first
+      shtml.each do |ss|
+       #ss=Sourcehtml.first
        page = Nokogiri::HTML(open("#{ss.common1}"))
        link1=page.xpath("#{ss.common2}")
        link1.each do |link|
+        
+        title=eval("#{ss.title}") if defined? link.at_css("h3 a").text
+        next if title.nil?
         pg=Page.new
-        pg.title=eval("#{ss.title}")
+        pg.title=title
         ref=eval("#{ss.ref}")
         pg.ref=ss.url+ref
         tt=eval("#{ss.time}")
@@ -44,7 +49,7 @@ class PagesController < ApplicationController
         pg.save
       end 
     end
-    
+   end  
  end
       def analyze
     
@@ -61,10 +66,12 @@ class PagesController < ApplicationController
        
        link1.each do |link|
         
-        pg=Page.new
+       
         #loa
-        pg.title=link.at_css("h3 a").text if defined? link.at_css("h3 a").text
-        
+        title=link.at_css("h3 a").text if defined? link.at_css("h3 a").text
+        next if title.nil?
+        pg=Page.new
+        pg.title=title
         pg.ref=link.at_css("h3 a")['href'] if defined? link.at_css("h3 a")['href']
         pg.time=link.at_css("span").text.delete("Сегодня ") if defined? link.at_css("span").text.delete("Сегодня ")
         pg.image=link.at_css('div a img')['src'] if defined? link.at_css('div a img')['src']

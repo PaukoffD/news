@@ -12,7 +12,6 @@ task html: :environment do
         tt=eval("#{ss.time}")
         pg.time=tt.to_datetime
         pg.source_id=ss.source_id
-        puts pg
         pg.save
       end 
     end
