@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 20160626182935) do
 
   add_index "infos", ["source_id", "data"], name: "index_infos_on_source_id_and_data", unique: true
 
+  create_table "levenstein_pages", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.integer  "count",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "levpages", force: :cascade do |t|
     t.integer  "page_id"
     t.integer  "parent_id"
