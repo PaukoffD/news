@@ -1,18 +1,25 @@
 task html: :environment do
-  source = Source.all
+ source = Source.all
+   shtml= Sourcehtml.all
     source.html.each do |s|
-       ss=Sourcehtml.first
+      shtml.each do |ss|
+       #ss=Sourcehtml.first
        page = Nokogiri::HTML(open("#{ss.common1}"))
        link1=page.xpath("#{ss.common2}")
        link1.each do |link|
+        
+        title=eval("#{ss.title}") if defined? link.at_css("h3 a").text
+        next if title.nil?
         pg=Page.new
-        pg.title=eval("#{ss.title}")
+        pg.title=title
         ref=eval("#{ss.ref}")
         pg.ref=ss.url+ref
         tt=eval("#{ss.time}")
         pg.time=tt.to_datetime
         pg.source_id=ss.source_id
+        puts pg
         pg.save
       end 
     end
+   end  
 end
