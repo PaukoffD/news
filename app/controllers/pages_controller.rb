@@ -224,7 +224,7 @@ def infoday1
    @source.each do |a|
     
     for i in 0..250 do
-    info=Info.find_by_source_id(a.id).where(data: (Date.today-i) ) || Info.new
+    info= Info.new
     count=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).count
     @tags = ActsAsTaggableOn::Tag.all.count
     @pg=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).pluck(:id)
