@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :tagoverlaps
   resources :tagexcepts
-  resources :sources
+  resources :sources do
+    resources :infos
+  end  
   resources :pages
   resources :sourcehtmls
 

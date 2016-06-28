@@ -29,4 +29,13 @@ class Source < ActiveRecord::Base
 scope :rss, -> { where html: nil }
 scope :html,-> { where html: true }
 
+
+def last
+ infos.order(:data).first
+end
+
+def source
+ infos.order(:source_id).last
+end
+
 end

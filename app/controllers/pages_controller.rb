@@ -36,7 +36,7 @@ class PagesController < ApplicationController
        link1=page.xpath("#{ss.common2}")
        link1.each do |link|
         
-        title=eval("#{ss.title}") if defined? link.at_css("h3 a").text
+        title=eval("#{ss.title}") if defined? eval("#{ss.title}")
         next if title.nil?
         pg=Page.new
         pg.title=title
@@ -44,6 +44,7 @@ class PagesController < ApplicationController
         pg.ref=ss.url+ref
         tt=eval("#{ss.time}")
         pg.time=tt.to_datetime
+        loa
         pg.source_id=ss.source_id
         puts pg
         pg.save
@@ -222,9 +223,10 @@ def infoday1
     info.save
    end 
    @source.each do |a|
-    
-    for i in 0..250 do
-    info= Info.new
+    jdata=Page.where(source_id: a.id).order("time asc").first
+loa
+    for i in (0..Date.today-jdata) do
+    info= info=Info.find_by_source_id(a.id) || Info.new
     count=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).count
     @tags = ActsAsTaggableOn::Tag.all.count
     @pg=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).pluck(:id)
