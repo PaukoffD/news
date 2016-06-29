@@ -27,30 +27,31 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-   source = Source.all
-   shtml= Sourcehtml.all
-    source.html.each do |s|
-      shtml.each do |ss|
+   load_rss
+   #source = Source.all
+  # shtml= Sourcehtml.all
+   # source.html.each do |s|
+    #  shtml.each do |ss|
        #ss=Sourcehtml.first
-       page = Nokogiri::HTML(open("#{ss.common1}"))
-       link1=page.xpath("#{ss.common2}")
-       link1.each do |link|
+    #   page = Nokogiri::HTML(open("#{ss.common1}"))
+    #   link1=page.xpath("#{ss.common2}")
+    #   link1.each do |link|
         
-        title=eval("#{ss.title}") if defined? eval("#{ss.title}")
-        next if title.nil?
-        pg=Page.new
-        pg.title=title
-        ref=eval("#{ss.ref}")
-        pg.ref=ss.url+ref
-        tt=eval("#{ss.time}")
-        pg.time=tt.to_datetime
-        loa
-        pg.source_id=ss.source_id
-        puts pg
-        pg.save
-      end 
-    end
-   end  
+       # title=eval("#{ss.title}") if defined? eval("#{ss.title}")
+        #next if title.nil?
+       # pg=Page.new
+        #pg.title=title
+        #ref=eval("#{ss.ref}")
+       # pg.ref=ss.url+ref
+        #tt=eval("#{ss.time}")
+        #pg.time=tt.to_datetime
+        #loa
+        #pg.source_id=ss.source_id
+        #puts pg
+        #pg.save
+    #  end 
+ #   end
+  # end  
  end
       def analyze
     

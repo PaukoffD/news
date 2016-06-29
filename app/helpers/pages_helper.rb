@@ -149,7 +149,7 @@ end
 
   def load_rss
    source = Source.all
-   source.each do |s|
+   source.rss.each do |s|
    if !s.html
     url = s.ref
     feed = Feedjira::Feed.fetch_and_parse url

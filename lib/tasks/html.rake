@@ -18,7 +18,7 @@ task html: :environment do
         pg.time=tt.to_datetime
         pg.source_id=ss.source_id
         image=eval("#{ss.image}") if defined? eval("#{ss.image}")
-        pg.image=ss.url.to_s+image.to_s
+        pg.image=ss.url.to_s+image.to_s unless image.nil?
         pg.summary=eval("#{ss.summary}") if defined? eval("#{ss.summary}")
         pg.save
       end 
