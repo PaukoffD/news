@@ -7,7 +7,6 @@ task infoday: :environment do
    @source = Source.all.count
    info=Info.first || Info.new
    info.page_count=@pages
-
    info.tag_count=@tags
    info.tagging=@taggings 
    info.size=@source

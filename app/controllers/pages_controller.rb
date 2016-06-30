@@ -173,19 +173,7 @@ class PagesController < ApplicationController
   end
 
 def infoday
-   puts "beginning"
-   @pages = Page.all.count
-   @tags = ActsAsTaggableOn::Tag.count
-   @taggings = ActsAsTaggableOn::Tagging.all.count
-   @source = Source.all.count
-   @s = Source.all
-   info=Info.first || Info.new
-    info.page_count=@pages
-
-    info.tag_count=@tags
-    info.tagging=@taggings 
-    info.size=@source
-    info.save
+    
     @info=Info.first
   end
 
