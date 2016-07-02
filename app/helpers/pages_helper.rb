@@ -150,8 +150,7 @@ end
   def load_rss
    source = Source.all
    source.rss.each do |s|
-   if !s.html
-    url = s.ref
+   url = s.ref
     feed = Feedjira::Feed.fetch_and_parse url
     feed.entries.each do |entry|
       @p = Page.new
@@ -162,8 +161,8 @@ end
       @p.image=entry.image if defined? entry.image
       s2 = entry.categories[0] if defined? entry.category
       cat1 = Category.find_by(name: s2) || Category.new
-      cat1.name="Без категории" if cat1.id==19
-      cat1.save
+      #cat1.name="Без категории" if cat1.id==19
+      #cat1.save
       if cat1.blank?
          c = Category.new
          c.name = entry.categories[0]
@@ -183,7 +182,7 @@ end
       ActsAsTaggableOn.delimiter = [' ', ',']
       @p.tag_list.add(@p.title, parse: true)
       @p.save
-     end
+     
     end 
    end  
  end
