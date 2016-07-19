@@ -70,7 +70,8 @@ class PagesController < ApplicationController
         
        
         #loa
-        title=link.at_css("h3 a").text if defined? link.at_css("h3 a").text
+        title=link.at_css("h3 a").text if defined? link.at_css("h3 a").text1
+        
         next if title.nil?
         pg=Page.new
         pg.title=title
@@ -247,6 +248,10 @@ loa
     # loa
     elsif params[:data]
      @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
+    #loa
+    elsif params[:datetimepicker12]
+     @pages = Page.where(time: (params['datetimepicker12'].to_time.beginning_of_day..params['datetimepicker12'].to_time.end_of_day)).order('time DESC').page(params[:page])
+    # loa
     elsif params[:tags]
      @pages = Page.tagged_with(params[:tags]['tag']).order('time DESC').page(params[:page])
     elsif params[:q]

@@ -39,22 +39,9 @@
   
   
   <tbody>
- 
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-2">
-                <div id="datetimepicker12"></div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        $(function ()  {
-             $('#datetimepicker12').datetimepicker({   
-                inline: true    
-             });   
-         });
-    </script>
 
+
+ 
       
      <% content_for :search do %>
  
@@ -68,7 +55,27 @@
   
      <tr>
 	  <td>
-	  
+<%= form_tag({controller: "pages", action: "index"}, method: "get") do %>  
+ <div class="form-group">
+        <div class="row">
+            <div class="col-md-2">   
+        
+  <%= text_field_tag('datetimepicker12') %>
+  <%= submit_tag("Choice") %>
+        </div>
+        </div>
+    </div> 
+  <% end %>
+
+
+    <script type="text/javascript">
+        $(function ()  {
+             $('#datetimepicker12').datetimepicker({   
+                inline: true,    
+                 format: 'DD-MM-YYYY',
+             });   
+         });
+    </script>	  
  
  
   
