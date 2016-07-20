@@ -76,6 +76,6 @@ gem 'redis-rack-cache'
 gem 'ransack'
 gem 'yandex-translator'
 gem 'jquery-ui-rails'
-gem "paper_trail"
+#gem "paper_trail"
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
