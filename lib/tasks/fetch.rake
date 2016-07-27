@@ -4,6 +4,7 @@ task fetch: :environment do
     url = s.ref
     feed = Feedjira::Feed.fetch_and_parse url
     feed.entries.each do |entry|
+      puts s
       @p = Page.new
       @p.title = entry.title
       @p.ref = entry.url

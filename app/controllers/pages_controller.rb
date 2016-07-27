@@ -179,7 +179,7 @@ def infoday
   end
 
   def infotoday
-   @info=Info.first
+   @info=Info.first || Info.new
    @source = Source.all
    @source.each do |a|
     info=Info.find_by_source_id(a.id) || Info.new
@@ -214,9 +214,10 @@ def infoday1
    end 
    @source.each do |a|
     jdata=Page.where(source_id: a.id).order("time asc").first
-loa
-    for i in (0..Date.today-jdata) do
-    info= info=Info.find_by_source_id(a.id) || Info.new
+
+    for i in (0..(Date.today-jdata.created_at.to_date).to_i) do
+    info= Info.find_by_source_id(a.id) || Info.new
+    #byebug
     count=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).count
     @tags = ActsAsTaggableOn::Tag.all.count
     @pg=Page.where(source_id: a.id, time: ((Date.today-i).to_time.beginning_of_day..(Date.today-i).to_time.end_of_day)).pluck(:id)
@@ -229,7 +230,7 @@ loa
     info.source_id=a.id
     info.page_count=count
     info.data=Date.today-i
-    info.save
+    info.save!
    end
    end 
 
@@ -370,6 +371,6 @@ loa
     # Never trust parameters from the scary internet, only allow the white list through.
   def page_params
     params.require(:page).permit!
-    params.require(:newslast).permit!
+    params.require(:info).permit!
   end
 end
