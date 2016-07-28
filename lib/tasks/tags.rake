@@ -1,22 +1,16 @@
 task tags: :environment do
-  ActsAsTaggableOn.delimiter = [' ', ',']
-  str1 = ActsAsTaggableOn::Tagging.last
-  tmp1 = if str1.blank?
-           0
-         else
-           str1.taggable_id.to_i
-        end
-  # @pages = Page.joins(:taggings).where('pages.id' => exists?  AND 'taggings.taggable_id' => nil ) #переписать все таки запрос
-  @pages = Page.where('pages.id > ? ', tmp1)
+ # ActsAsTaggableOn.delimiter = [' ', ',']
+ puts "Work with tags" 
+  
+  @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil})
+   ActsAsTaggableOn.delimiter = [' ']
+   @pages.each do |p|   
+     p.tag_list.add(p.title, parse: true)
+     p.save
+    end 
   tgs = Tagexcept.all
   tgsovlp = Tagoverlap.all
-  @pages.each do |pt|
-    str = pt.tag_list.add(pt.title, parse: true)
-
-    pt.save
-  end
-  # puts pt.tag_list
-
+   
   tgs.each do |tt|
     result = ActsAsTaggableOn::Tag.where(name: tt.name)
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
