@@ -3,7 +3,7 @@ task fetch: :environment do
  source = Source.all
    source.rss.each do |s|
     url = s.ref
-    puts s
+    puts s.name, s.ref
     feed = Feedjira::Feed.fetch_and_parse url
     feed.entries.each do |entry|
        @p = Page.create(title: entry.title,
