@@ -10,7 +10,6 @@ task fetch: :environment do
                             time: entry.published.to_datetime,
                             ref: entry.url,
                             source_id: s.id,
-                            image: entry.image,
                             summary: entry.summary
                             )
       s2 = entry.categories[0] if defined? entry.category
@@ -25,6 +24,7 @@ task fetch: :environment do
          cat1 = Category.last
        end
       @p.category_id = cat1.id
+      @p.image=entry.image if defined? entry.image
       @p.save
      
     end  
