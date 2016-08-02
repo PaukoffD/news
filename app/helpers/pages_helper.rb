@@ -18,18 +18,34 @@ module PagesHelper
   require 'will_paginate/array'
 
   def load_html
-   
-  page = Nokogiri::HTML(open('#{s.common1}'))
-  link1=page.xpath("#{s.common1}")
-  link1.children.each do |link|
-   pg=Page.new
-   pg.title='#{s.title}'.to_s
-   pg.ref='#{s.ref}'.to_s
-   pg.time='#{s.time}'.to_s
-   pg.save
+  source = Source.all
+  shtml= Sourcehtml.all
+  source.html.each do |s|
+    shtml.each do |ss|
+    page = Nokogiri::HTML(open("#{ss.common1}"))
+       link1=page.xpath("#{ss.common2}")
+       link1.each do |link|
+        begin
+        title=eval("#{ss.title}") if defined? eval("#{ss.title}")
+        next if title.nil?
+        pg=Page.new
+        pg.title=title
+        ref=eval("#{ss.ref}")
+        pg.ref=ss.url+ref
+        tt=eval("#{ss.time}")
+        pg.time=tt.to_datetime
+        pg.source_id=ss.source_id
+        image=eval("#{ss.image}") if defined? eval("#{ss.image}")
+        pg.image=ss.url.to_s+image.to_s unless image.nil?
+        pg.summary=eval("#{ss.summary}") if defined? eval("#{ss.summary}")
+        pg.save
+      rescue
+        next
+      end
+     end
+    end 
+   end
   end
-end
-
    #begin
    #page = Nokogiri::HTML(open("http://utro.ru/news/"))
    #link1=page.xpath('/html/body/div[4]/div[4]/div/div[3]/div')

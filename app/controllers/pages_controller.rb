@@ -27,7 +27,7 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-   load_rss
+   load_html
    #source = Source.all
   # shtml= Sourcehtml.all
    # source.html.each do |s|
@@ -87,7 +87,7 @@ class PagesController < ApplicationController
       end     
 
   def atags
-   @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil})
+   @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil}).limit(10000)
    ActsAsTaggableOn.delimiter = [' ']
    @pages.each do |p|   
      p.tag_list.add(p.title, parse: true)

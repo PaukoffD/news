@@ -2,7 +2,7 @@ task tags: :environment do
  # ActsAsTaggableOn.delimiter = [' ', ',']
  puts "Work with tags" 
   
-  @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil})
+  @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil}).limit(10000)
    ActsAsTaggableOn.delimiter = [' ']
    @pages.each do |p|   
      p.tag_list.add(p.title, parse: true)

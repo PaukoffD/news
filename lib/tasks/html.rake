@@ -7,7 +7,7 @@ task html: :environment do
        page = Nokogiri::HTML(open("#{ss.common1}"))
        link1=page.xpath("#{ss.common2}")
        link1.each do |link|
-        
+        begin 
         title=eval("#{ss.title}") if defined? eval("#{ss.title}")
         next if title.nil?
         pg=Page.new
@@ -21,6 +21,10 @@ task html: :environment do
         pg.image=ss.url.to_s+image.to_s unless image.nil?
         pg.summary=eval("#{ss.summary}") if defined? eval("#{ss.summary}")
         pg.save
+        rescue
+          next
+          
+        end  
       end 
     end
    end  
