@@ -5,6 +5,7 @@ task fetch: :environment do
     url = s.ref
     puts s.name, s.ref
     feed = Feedjira::Feed.fetch_and_parse url
+    begin
     feed.entries.each do |entry|
        @p = Page.create(title: entry.title,
                             time: entry.published.to_datetime,
@@ -26,7 +27,10 @@ task fetch: :environment do
       @p.category_id = cat1.id
       @p.image=entry.image if defined? entry.image
       @p.save
-     
+
     end  
+    rescue
+      next
+     end 
   end
 end

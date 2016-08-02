@@ -251,13 +251,13 @@ def infoday1
       @pages = Page.where('category_id' => params['category']).order('time DESC').page(params[:page])
     elsif params[:tag]
       @pages = Page.tagged_with(params[:tag]).order('time DESC').page(params[:page])
-    # loa
+    elsif params[:id]
+      @pages = Page.where('source_id' => params['id']).order('time DESC').page(params[:page])
     elsif params[:data]
      @pages = Page.where(time: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('time DESC').page(params[:page])
     #loa
     elsif params[:datetimepicker12]
      @pages = Page.where(time: (params['datetimepicker12'].to_time.beginning_of_day..params['datetimepicker12'].to_time.end_of_day)).order('time DESC').page(params[:page])
-    # loa
     elsif params[:tags]
      @pages = Page.tagged_with(params[:tags]['tag']).order('time DESC').page(params[:page])
     elsif params[:q]
@@ -271,7 +271,8 @@ def infoday1
    
   
    # loa
-   @categories = Category.all.order('count DESC').limit(50)
+   @categories = Category.order('count DESC').limit(50)
+   @sources = Source.all
    @search = Page.search(params[:q])
     # @pages = @search.result.order('time DESC').page(params[:page])
   end
