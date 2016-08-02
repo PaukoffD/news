@@ -87,7 +87,7 @@ class PagesController < ApplicationController
       end     
 
   def atags
-   @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil}).limit(10000)
+   @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil}).limit(1000)
    ActsAsTaggableOn.delimiter = [' ']
    @pages.each do |p|   
      p.tag_list.add(p.title, parse: true)

@@ -4,6 +4,7 @@ task tags: :environment do
   
   @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil}).limit(1000)
    ActsAsTaggableOn.delimiter = [' ']
+   puts @pages.count
    @pages.each do |p|   
      p.tag_list.add(p.title, parse: true)
      p.save
@@ -14,6 +15,7 @@ task tags: :environment do
   tgs.each do |tt|
     result = ActsAsTaggableOn::Tag.where(name: tt.name)
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
+    puts result "deleted"
     ActsAsTaggableOn::Tag.where(name: tt.name).delete_all
   end
   tgsovlp.each do |pt1|
