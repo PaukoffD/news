@@ -27,7 +27,7 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def load
-   load_html
+   load_rss
    #source = Source.all
   # shtml= Sourcehtml.all
    # source.html.each do |s|

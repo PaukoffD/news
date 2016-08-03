@@ -150,7 +150,7 @@
        <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: truncate_html(a.summary, length: 400, omission: '...(далее)') %></h6></div></summary>
        
 
-        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") %> <%= markdown(truncate_html(a.summary, length: 400, omission: '...(далее)')) %></div>
+        <div class=inline><%= image_tag(a.image, class: 'avatar2', :size => "200") %> <%= markdown(truncate_html(a.summary, length: 400, omission: '...(далее)')) %></div>
        
        </details> 
 
@@ -174,7 +174,7 @@
 	 
        <details>
        <summary><%= image_tag(b.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to b.title, nil, 'href' => b.ref , :target => "_blank" , title: truncate_html(b.summary, length: 400, omission: '...(далее)') %> </h6></div></summary>
-        <%= image_tag(b.image, class: 'avatar2', :size => "200") %><%= markdown(truncate_html(b.summary, length: 400, omission: '...(далее)')) %>
+         <div class=inline><%= image_tag(b.image, class: 'avatar2', :size => "200") %><%= markdown(truncate_html(b.summary, length: 400, omission: '...(далее)')) %>
        </details> 
 	  </td>
 	  
