@@ -15,7 +15,7 @@ task tags: :environment do
   tgs.each do |tt|
     result = ActsAsTaggableOn::Tag.where(name: tt.name)
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
-    puts result "deleted"
+   # puts result "deleted"
     ActsAsTaggableOn::Tag.where(name: tt.name).delete_all
   end
   tgsovlp.each do |pt1|
