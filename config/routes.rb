@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'loadnews', to: 'pages#load'
   get 'analyze', to: 'pages#analyze'
   get 'category/:category', to: 'pages#index', as: :category
-  get 'sources/:source', to: 'pages#index', as: :source1
+  get 'ss', to: 'pages#index'
   get 'data', to: 'pages#index', as: :data
   get 'atags', to: 'pages#atags'
   get 'tag_cloud', to: 'pages#tag_cloud'

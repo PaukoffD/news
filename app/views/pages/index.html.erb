@@ -97,9 +97,9 @@
 <% end %>
 
 <h4>Источники</h4>
-<% @sources.each do |source| %>
+<% @sources.each do |ss| %>
    
-  <h6><%= link_to source.name, source %>  </h6>
+  <h6><%= link_to ss.name, ss_path(ss.id) %>  </h6>
 <% end %>
 
 </td>	 
@@ -137,7 +137,7 @@
 	
 	
 	 
-	 <td><h6><%= a.time.to_time().strftime("%R") %></h6>
+	 <td><h6><%= (a.time+10800).to_time().strftime("%R") %></h6>
 	  
 	 </td>
 	
@@ -147,10 +147,10 @@
 	 <% a.summary= " " %>
 	 <% end %>
       <details>
-       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></div></summary>
+       <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: truncate_html(a.summary, length: 400, omission: '...(далее)') %></h6></div></summary>
        
 
-        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") %> <%= markdown(a.summary) %></div>
+        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") %> <%= markdown(truncate_html(a.summary, length: 400, omission: '...(далее)')) %></div>
        
        </details> 
 
@@ -163,7 +163,7 @@
 	 
 	
 	  
-	<td> <h6><%= b.time.to_time().strftime("%R") %></h6></td>
+	<td> <h6><%= (b.time+10800).to_time().strftime("%R") %></h6></td>
 	
 	  
 	  
@@ -173,8 +173,8 @@
 	 <% end %>
 	 
        <details>
-       <summary><%= image_tag(b.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to b.title, nil, 'href' => b.ref , :target => "_blank" , title: b.summary %> </h6></div></summary>
-        <%= image_tag(b.image, class: 'avatar2', :size => "200") %><%= markdown(b.summary) %>
+       <summary><%= image_tag(b.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to b.title, nil, 'href' => b.ref , :target => "_blank" , title: truncate_html(b.summary, length: 400, omission: '...(далее)') %> </h6></div></summary>
+        <%= image_tag(b.image, class: 'avatar2', :size => "200") %><%= markdown(truncate_html(b.summary, length: 400, omission: '...(далее)')) %>
        </details> 
 	  </td>
 	  
