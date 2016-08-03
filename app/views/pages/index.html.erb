@@ -149,7 +149,7 @@
 	 <% a.summary= " " %>
 	 <% end %>
       <details>
-        <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: truncate_html(a.summary, length: 300, omission: '...(далее)') %></h6></summary>
+        <summary><%= image_tag(a.source.avatar.url(:thumb), class: 'avatar1', :size => "20") %> <%=  link_to a.title, nil, 'href' => a.ref , :target => "_blank" , title: a.summary %></h6></summary>
        
 
        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") %> <%= markdown(a.summary) %></div>
