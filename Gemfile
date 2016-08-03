@@ -43,6 +43,13 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  gem 'rails_best_practices', require: false
+  gem 'rb-inotify', github: 'kvokka/rb-inotify', require: false
+  gem 'rubocop', require: false
+  gem 'rubycritic', require: false
+  gem 'spring'
+  gem 'traceroute'
+  
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -80,3 +87,4 @@ gem 'jquery-ui-rails'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'truncate_html'
+gem 'sidekiq'

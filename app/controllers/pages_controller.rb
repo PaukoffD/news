@@ -282,6 +282,11 @@ def infoday1
    fetch_news
   end
 
+  def redis2
+   @source = Source.all
+   fetch_news
+  end
+
   def tag_cloud
        # @tags = Tags.all.order('count DESC')
   end
