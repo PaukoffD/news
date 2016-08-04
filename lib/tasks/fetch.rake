@@ -4,9 +4,13 @@ task fetch: :environment do
    source.rss.each do |s|
     url = s.ref
     puts s.name, s.ref
-    feed = Feedjira::Feed.fetch_and_parse url
     begin
+    feed = Feedjira::Feed.fetch_and_parse url
+    
       puts response.status
+    rescue
+      next
+     end   
     feed.entries.each do |entry|
        @p = Page.create(title: entry.title,
                             time: entry.published.to_datetime,
@@ -30,8 +34,6 @@ task fetch: :environment do
       @p.save
 
     end  
-    rescue
-      next
-     end 
+    
   end
 end
