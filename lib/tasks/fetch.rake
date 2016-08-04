@@ -7,7 +7,7 @@ task fetch: :environment do
     begin
     feed = Feedjira::Feed.fetch_and_parse url
     
-      puts response.status
+     # puts response.status
     #rescue
     #  next
      end   
