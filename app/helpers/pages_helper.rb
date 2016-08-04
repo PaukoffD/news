@@ -169,6 +169,7 @@ module PagesHelper
    url = s.ref
     feed = Feedjira::Feed.fetch_and_parse url
     feed.entries.each do |entry|
+      #loa
       @p = Page.new
       @p.title = entry.title
       @p.ref = entry.url

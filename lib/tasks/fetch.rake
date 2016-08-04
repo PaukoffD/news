@@ -6,6 +6,7 @@ task fetch: :environment do
     puts s.name, s.ref
     feed = Feedjira::Feed.fetch_and_parse url
     begin
+      puts response.status
     feed.entries.each do |entry|
        @p = Page.create(title: entry.title,
                             time: entry.published.to_datetime,

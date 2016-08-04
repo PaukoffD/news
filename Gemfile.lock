@@ -445,6 +445,3 @@ DEPENDENCIES
   will_paginate
   yaml_db
   yandex-translator
-
-BUNDLED WITH
-   1.12.5
