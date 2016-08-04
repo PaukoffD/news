@@ -269,7 +269,11 @@ def infoday1
       @pages = Page.all.order('time DESC').page(params[:page])
     end
    
-  
+  sources = Source.all
+  FetchNewsWorker.perform_async(20.minutes, sources)
+
+
+
    # loa
    @categories = Category.order('count DESC').limit(50)
    @sources = Source.all
