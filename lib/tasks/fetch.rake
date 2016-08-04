@@ -8,8 +8,8 @@ task fetch: :environment do
     feed = Feedjira::Feed.fetch_and_parse url
     
       puts response.status
-    rescue
-      next
+    #rescue
+    #  next
      end   
     feed.entries.each do |entry|
        @p = Page.create(title: entry.title,
