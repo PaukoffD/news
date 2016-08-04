@@ -167,7 +167,13 @@ module PagesHelper
    source = Source.all
    source.rss.each do |s|
    url = s.ref
+    begin
     feed = Feedjira::Feed.fetch_and_parse url
+    #loa
+      puts response.status
+    #rescue
+    #  next
+    end   
     feed.entries.each do |entry|
       #loa
       @p = Page.new
@@ -202,5 +208,5 @@ module PagesHelper
      
     end 
    end  
- end
+  end
 end
