@@ -44,7 +44,7 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   gem 'rails_best_practices', require: false
-  gem 'rb-inotify', github: 'kvokka/rb-inotify', require: false
+ # gem 'rb-inotify', github: 'kvokka/rb-inotify', require: false
   gem 'rubocop', require: false
   gem 'rubycritic', require: false
   gem 'spring'

@@ -167,13 +167,13 @@ module PagesHelper
    source = Source.all
    source.rss.each do |s|
    url = s.ref
-    begin
+   begin
     feed = Feedjira::Feed.fetch_and_parse url
-    #loa
-      puts response.status
-    #rescue
-    #  next
-    end   
+    
+    
+    rescue Faraday::Error::ConnectionFailed => e
+      next
+     end   
     feed.entries.each do |entry|
       #loa
       @p = Page.new

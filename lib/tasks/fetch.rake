@@ -7,9 +7,9 @@ task fetch: :environment do
     begin
     feed = Feedjira::Feed.fetch_and_parse url
     
-     # puts response.status
-    #rescue
-    #  next
+    
+    rescue Faraday::Error::ConnectionFailed => e
+      next
      end   
     feed.entries.each do |entry|
        @p = Page.create(title: entry.title,

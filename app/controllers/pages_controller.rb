@@ -180,7 +180,16 @@ class PagesController < ApplicationController
 
 def infoday
     
-    @info=Info.first
+   @pages = Page.all.count
+   @tags = ActsAsTaggableOn::Tag.all.count
+   @taggings = ActsAsTaggableOn::Tagging.all.count
+   @source = Source.all.count
+   @info=Info.first || Info.new
+   @info.page_count=@pages
+   @info.tag_count=@tags
+   @info.tagging=@taggings 
+   @info.size=@source
+   @info.save
   end
 
   def infotoday
@@ -188,6 +197,7 @@ def infoday
    @source = Source.all
    @source.each do |a|
     info=Info.find_by_source_id(a.id) || Info.new
+   # loa
     count=Page.where(source_id: a.id).count
     @pg=Page.where(source_id: a.id).pluck(:id)
     tagging_count=ActsAsTaggableOn::Tagging.where(taggable_id: @pg).count 

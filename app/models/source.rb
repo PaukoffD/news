@@ -30,7 +30,7 @@ scope :rss, -> { where html: false }
 scope :html,-> { where html: true }
 
 
-def last
+def last1
  infos.order(:data).first
 end
 
