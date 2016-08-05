@@ -90,3 +90,4 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
+gem 'sidekiq-status'

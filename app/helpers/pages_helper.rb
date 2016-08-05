@@ -164,6 +164,7 @@ module PagesHelper
   end
 
   def load_rss
+   
    source = Source.all
    source.rss.each do |s|
    url = s.ref
@@ -172,6 +173,7 @@ module PagesHelper
     
     
     rescue Faraday::Error::ConnectionFailed => e
+      puts Faraday::Error::ConnectionFailed
       next
      end   
     feed.entries.each do |entry|

@@ -280,7 +280,7 @@ def infoday1
     end
    
   sources = Source.all
-  #FetchNewsWorker.perform_async(20.minutes, sources)
+  FetchNewsWorker.perform_async(sources,5.minutes)
 
 
 

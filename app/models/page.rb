@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  title       :string
 #  ref         :string
-#  time        :time             default(NULL)
+#  time        :datetime
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source_id   :integer          default(0)
@@ -13,10 +13,6 @@
 #  category_id :integer          default(0)
 #  tagtitle    :string
 #  image       :string
-#
-# Indexes
-#
-#  index_pages_on_ref  (ref) UNIQUE
 #
 
 class Page < ActiveRecord::Base

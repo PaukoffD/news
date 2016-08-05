@@ -1,12 +1,16 @@
 class FetchNewsWorker
   include Sidekiq::Worker
+  include Sidekiq::Status::Worker # Important!
 
-  def perform(sources)
+
+  def perform(sources,count)
   	source = Source.all
     source.rss.each do |s|
     url = s.ref
+    puts url
     feed = Feedjira::Feed.fetch_and_parse url
     feed.entries.each do |entry|
+      puts entry.title
       @p = Page.new
       @p.title = entry.title
       @p.ref = entry.url
@@ -31,10 +35,12 @@ class FetchNewsWorker
         @p.summary = entry.summary[0..400]
        
        end
+       puts @p.title
       @p.save
       @p = Page.last
       ActsAsTaggableOn.delimiter = [' ', ',']
       @p.tag_list.add(@p.title, parse: true)
+      puts @p.tag_list
       @p.save
      
     end 

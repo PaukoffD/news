@@ -62,15 +62,6 @@ ActiveRecord::Schema.define(version: 20160627123359) do
 
   add_index "infos", ["source_id", "data"], name: "index_infos_on_source_id_and_data", unique: true
 
-  create_table "levenstein_pages", force: :cascade do |t|
-    t.integer  "page_id"
-    t.integer  "parent_id"
-    t.string   "name"
-    t.integer  "count",      default: 0
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
   create_table "levpages", force: :cascade do |t|
     t.integer  "page_id"
     t.integer  "parent_id"
@@ -93,7 +84,7 @@ ActiveRecord::Schema.define(version: 20160627123359) do
   create_table "pages", force: :cascade do |t|
     t.string   "title"
     t.string   "ref"
-    t.time     "time"
+    t.datetime "time"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "source_id",   default: 0
@@ -102,8 +93,6 @@ ActiveRecord::Schema.define(version: 20160627123359) do
     t.string   "tagtitle"
     t.string   "image"
   end
-
-  add_index "pages", ["ref"], name: "index_pages_on_ref", unique: true
 
   create_table "sourcehtmls", force: :cascade do |t|
     t.integer  "source_id"
