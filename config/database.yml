@@ -22,8 +22,11 @@ test:
  pool: 5
 
 production:
- <<: *default
- database: db/production.sqlite3
+  adapter: postgresql
+  host: news.paukoff.ru
+  pool: 5
+  timeout: 5000
+  database: news
   
   
   
