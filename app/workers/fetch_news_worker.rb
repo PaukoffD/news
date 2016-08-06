@@ -11,7 +11,13 @@ class FetchNewsWorker
     source.rss.each do |s|
     url = s.ref
     puts url
+    begin
     feed = Feedjira::Feed.fetch_and_parse url
+    
+    
+    rescue Faraday::Error::ConnectionFailed => e
+      next
+     end   
     feed.entries.each do |entry|
       puts entry.title
       @p = Page.new
