@@ -1,8 +1,10 @@
 require 'sidekiq/web'
 require 'sidekiq-status/web'
+require 'sidetiq/web'
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   mount Sidekiq::Web, at: "/sidekiq"
+  
   devise_for :users
   resources :tagoverlaps
   resources :tagexcepts

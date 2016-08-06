@@ -1,6 +1,9 @@
 class FetchNewsWorker
   include Sidekiq::Worker
   include Sidekiq::Status::Worker # Important!
+  include Sidetiq::Schedulable
+
+  recurrence { minutely(20) }
 
 
   def perform(sources,count)
@@ -35,9 +38,7 @@ class FetchNewsWorker
         @p.summary = entry.summary[0..400]
        
        end
-       puts @p.title
-      @p.save
-      @p = Page.last
+      
       ActsAsTaggableOn.delimiter = [' ', ',']
       @p.tag_list.add(@p.title, parse: true)
       puts @p.tag_list

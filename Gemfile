@@ -91,3 +91,4 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'sidekiq-status'
+gem 'sidetiq'
