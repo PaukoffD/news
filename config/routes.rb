@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get 'tag_cloud', to: 'pages#tag_cloud'
   get 'tags/:tag', to: 'pages#index', as: :tag
   # get 'data/:data', to: 'pages#index', as: :data
-  get 'info', to: 'pages#info'
+  get 'info', to: 'infos#info'
   get 'remove_tags', to: 'pages#rtags'
   get 'tagexport', to:   'pages#tagexport'
   get 'tagimport', to:   'pages#tagimport'
@@ -33,9 +33,11 @@ Rails.application.routes.draw do
   get 'redis', to: 'pages#redis'
   get 'redis2', to: 'pages#redis2'
   get 'rss', to: 'pages#rss'
-  get 'infoday', to: 'pages#infoday'
-  get 'infoday1', to: 'pages#infoday1'
-  get 'infotoday', to: 'pages#infotoday'
+  get 'infoday', to: 'infos#infoday'
+  get 'infoday1', to: 'infos#infoday1'
+  get 'infotoday', to: 'infos#infotoday'
   get 'html', to: 'sourcehtmls#html'
   get 'tmp', to: 'pages#tmp'
+  get 'sourceexport', to:   'sources#sourceexport'
+  get 'sourceimport', to:   'sources#sourceimport'
 end
