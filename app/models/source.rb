@@ -34,7 +34,7 @@ def last1
  infos.order(:data).first
 end
 
-def source
+def source1
  infos.order(:source_id).last
 end
 
