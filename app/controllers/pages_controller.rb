@@ -22,49 +22,25 @@ class PagesController < ApplicationController
   require 'time'
   require 'csv'
 
+
   include PagesHelper
 
-  # GET /pages
-  # GET /pages.json
   def load
    load_rss
-   #source = Source.all
-  # shtml= Sourcehtml.all
-   # source.html.each do |s|
-    #  shtml.each do |ss|
-       #ss=Sourcehtml.first
-    #   page = Nokogiri::HTML(open("#{ss.common1}"))
-    #   link1=page.xpath("#{ss.common2}")
-    #   link1.each do |link|
-        
-       # title=eval("#{ss.title}") if defined? eval("#{ss.title}")
-        #next if title.nil?
-       # pg=Page.new
-        #pg.title=title
-        #ref=eval("#{ss.ref}")
-       # pg.ref=ss.url+ref
-        #tt=eval("#{ss.time}")
-        #pg.time=tt.to_datetime
-        #loa
-        #pg.source_id=ss.source_id
-        #puts pg
-        #pg.save
-    #  end 
- #   end
-  # end  
- end
-      def analyze
-    
-      end
+  end
+  
+  def analyze
+   
+  end
 
  def tmp
     #source = Source.all
    # source.each do |s|
       
       #  ss=Sourcehtml.first
-       page = Nokogiri::HTML(open("https://cont.ws"))
+       page = Nokogiri::HTML(open("http://rueconomics.ru"))
 
-       link1=page.xpath('//*[contains(@class,"post_prv")]')
+       link1=page.xpath('//*[contains(@class,"left_news_post")]')
        
        link1.each do |link|
         
@@ -86,50 +62,9 @@ class PagesController < ApplicationController
        end   
       end     
 
-  def atags
-   @pages = Page.joins('LEFT OUTER JOIN "taggings" ON "taggings"."taggable_id" = "pages"."id"').where(taggings: {taggable_id: nil}).limit(1000)
-   ActsAsTaggableOn.delimiter = [' ']
-   @pages.each do |p|   
-     p.tag_list.add(p.title, parse: true)
-     p.save
-    end  
-  end
-
-  def rtags # remove tags
-    tgs = Tagexcept.all
-   tgsovlp = Tagoverlap.all
-   tgs.each do |pt|
-      result = ActsAsTaggableOn::Tag.where(name: pt.name)
-    ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
-     ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
-   end
-    tgsovlp.each do |pt1|
-        result = ActsAsTaggableOn::Tag.where(name: pt1.name)
-    result1 = ActsAsTaggableOn::Tag.where(name: pt1.nametarget)
-    # res=result.tagging_count+result1.tagging_count
-    
-     if !result.blank? && !result1.blank?
-      res = result[0]['taggings_count'] + result1[0]['taggings_count']
-      result[0]['taggings_count'] = res
-       ActsAsTaggableOn::Tagging.where(tag_id: result).update_all(tag_id: result[0]['id'])
-     
-      ActsAsTaggableOn::Tag.where(name: pt1.nametarget).update_all(taggings_count: res)
-      ActsAsTaggableOn::Tag.where(name: pt1.name).delete_all
-    
-    else
-    unless result.blank?
-     ActsAsTaggableOn::Tagging.where(tag_id: result).update_all(tag_id: result[0]['id'])
-     ActsAsTaggableOn::Tag.where(name: pt1.name).update_all(name: pt1.nametarget)
-    end
-    end
-  end
-    @cats=Category.all
-    @cats.each do |cat|
-      cat.count=Page.where(category_id: cat.id).count
-      cat.save
-   end
   
-  end
+
+ 
   
   def search_tags1
     render :search_tags
@@ -155,9 +90,7 @@ class PagesController < ApplicationController
    
   end
 
-  
-
-  
+ 
 
   def index
 
@@ -174,6 +107,7 @@ class PagesController < ApplicationController
     #loa
     elsif params[:datetimepicker12]
      @pages = Page.where(time: (params['datetimepicker12'].to_time.beginning_of_day..params['datetimepicker12'].to_time.end_of_day)).order('time DESC').page(params[:page])
+    # loa
     elsif params[:tags]
      @pages = Page.tagged_with(params[:tags]['tag']).order('time DESC').page(params[:page])
     elsif params[:q]
@@ -185,24 +119,15 @@ class PagesController < ApplicationController
       @pages = Page.all.order('time DESC').page(params[:page])
     end
    
-  sources = Source.all
-  #FetchNewsWorker.perform_async(sources,5.minutes)
-
-
-
+  
    # loa
-   @categories = Category.order('count DESC').limit(50)
-   @sources = Source.all
+   @categories = Category.all.order('count DESC').limit(50)
    @search = Page.search(params[:q])
+   @sources = Source.all
     # @pages = @search.result.order('time DESC').page(params[:page])
   end
 
   def redis
-   @source = Source.all
-   fetch_news
-  end
-
-  def redis2
    @source = Source.all
    fetch_news
   end
@@ -226,34 +151,9 @@ class PagesController < ApplicationController
   def edit
   end
 
-  def tagexport
-    @tags = ActsAsTaggableOn::Tag.all
-    #loa
-    f=File.new('tags.txt', 'w+') 
+  
 
-     @tags.each do |tt|
-      f << tt.name + ";"
-     # loa
-     end
-  end
-
-  def tagimport
-    #@tags = Tagecxept.new
-   #csv_text = File.read('tags1.txt')
-   csv = CSV.foreach('tags1.txt', :headers => false)
-   csv.each do |row|
-   a=row.to_s.split(";")
-   a.each do |b|
-    tag = Tagexcept.new
-    if b.match("\\[")
-       tag.name=b[2,b.length-2]
-     elsif  !b.match('\\]')
-       tag.name=b
-     end
-    tag.save
-   end
-   end
-  end
+  
 
   def create
     @page = Page.new(page_params)
@@ -302,6 +202,6 @@ class PagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
   def page_params
     params.require(:page).permit!
-    params.require(:info).permit!
+    params.require(:page).permit(:title, :tag_list)
   end
 end
