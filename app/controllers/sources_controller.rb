@@ -39,6 +39,7 @@ def sourceimport
    a=row.to_s.split(";")
    s1=a[0][2,a[0].length-2]
    source=Source.find_by_id(s1)|| Source.new
+   source.id=s1.to_i
    source.name=a[1]
    source.ref=a[2]
    source.created_at=a[3].to_datetime
