@@ -18,13 +18,11 @@ class SourcesController < ApplicationController
 
 
 def sourceexport
-
     @sources = Source.all
     f=File.new('sources.txt', 'r+') 
 
      @sources.each do |tt|
-
-      f << [tt.id.to_s,tt.name,tt.ref,tt.created_at.to_s,tt.updated_at.to_s,tt.avatar_file_name,tt.avatar_content_type,tt.avatar_file_size.to_s,tt.avatar_updated_at.to_s,tt.type,tt.html].join(';') <<"\n"
+      f << [tt.id.to_s,tt.name,tt.ref,tt.created_at.to_s,tt.updated_at.to_s,tt.avatar_file_name,tt.avatar_content_type,tt.avatar_file_size.to_s,tt.avatar_updated_at.to_s, tt.count.to_s, tt.type,tt.html].join(';') <<"\n"
      #oa
      end
   end
